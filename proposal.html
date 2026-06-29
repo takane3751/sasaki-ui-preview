@@ -1,0 +1,372 @@
+<title>画像カルテ ご提案 — ササキ株式会社 志和様</title>
+<style>
+  :root{
+    --brand:#0099E1;
+    --brand-dark:#007BB8;
+    --brand-soft:#E2F4FC;
+    --brand-tint:#F2FAFE;
+    --ground:#F4F7FA;
+    --surface:#FFFFFF;
+    --ink:#16222E;
+    --ink-2:#3A4A57;
+    --mut:#6B7986;
+    --line:#E1E8EE;
+    --line-2:#EDF1F5;
+    --ok:#1E9E6A;
+    --ok-soft:#E6F5EE;
+    --accent:#F4A026;
+    --r:16px;
+    --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Meiryo",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--font);color:var(--ink);background:var(--ground);
+    -webkit-font-smoothing:antialiased;line-height:1.85;font-size:15.5px;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+  h2,h3{letter-spacing:.01em;text-wrap:balance}
+  a{color:var(--brand-dark)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* バー */
+  .topbar{
+    background:var(--surface);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:10;
+  }
+  .topbar .wrap{display:flex;align-items:center;gap:12px;height:58px}
+  .topbar .logo{
+    width:30px;height:30px;border-radius:8px;flex:none;
+    background:linear-gradient(135deg,var(--brand),#5CC8F2);display:grid;place-items:center;color:#fff;
+  }
+  .topbar .who{font-size:13px;font-weight:700}
+  .topbar .who span{color:var(--mut);font-weight:400;font-size:12px}
+  .topbar .cta{
+    margin-left:auto;background:var(--brand);color:#fff;border-radius:10px;padding:9px 16px;font-size:13.5px;
+    font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.15s;
+  }
+  .topbar .cta:hover{background:var(--brand-dark)}
+  @media(max-width:560px){.topbar .cta span{display:none}}
+
+  /* ヒーロー */
+  .hero{
+    background:
+      radial-gradient(900px 420px at 80% -20%, var(--brand-soft) 0%, transparent 60%),
+      linear-gradient(180deg,#FFFFFF, #FBFDFE);
+    border-bottom:1px solid var(--line);
+  }
+  .hero .wrap{padding:54px 22px 48px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;
+    color:var(--brand-dark);background:var(--brand-soft);border:1px solid #C9EAF8;border-radius:999px;padding:6px 13px;
+  }
+  .hero h1{font-size:clamp(27px,5vw,40px);line-height:1.35;margin:18px 0 10px;letter-spacing:.01em}
+  .hero h1 .nm{color:var(--brand-dark)}
+  .hero .lead{font-size:16.5px;color:var(--ink-2);margin:0 0 26px;max-width:620px}
+  .addr{
+    display:flex;flex-wrap:wrap;gap:10px 30px;font-size:13.5px;color:var(--mut);
+    border-top:1px dashed var(--line);padding-top:18px;
+  }
+  .addr b{color:var(--ink-2)}
+
+  /* セクション */
+  section.blk{padding:46px 0}
+  section.blk + section.blk{border-top:1px solid var(--line-2)}
+  .kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--brand);margin:0 0 8px}
+  h2.sec{font-size:24px;margin:0 0 8px}
+  .sec-lead{color:var(--ink-2);margin:0 0 26px;font-size:15.5px}
+
+  /* なぜ今 — 3ステップ */
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .why .c{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px}
+  .why .c .no{font-weight:800;color:var(--brand);font-size:13px;letter-spacing:.06em}
+  .why .c h3{font-size:16px;margin:8px 0 6px}
+  .why .c p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.7}
+
+  /* 解決策 feature */
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:6px}
+  .feat .f{display:flex;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 17px}
+  .feat .f .ic{width:38px;height:38px;flex:none;border-radius:10px;background:var(--brand-soft);color:var(--brand-dark);display:grid;place-items:center}
+  .feat .f h4{margin:0 0 3px;font-size:14.5px}
+  .feat .f p{margin:0;font-size:12.8px;color:var(--mut);line-height:1.65}
+  .notdo{
+    margin-top:22px;background:var(--brand-tint);border:1px solid #D5EEF9;border-radius:13px;padding:16px 20px;
+    font-size:14px;color:var(--ink-2);
+  }
+  .notdo b{color:var(--brand-dark)}
+
+  /* デモCTA */
+  .demo{
+    margin-top:24px;background:linear-gradient(135deg,#0A2A3C,#0E3F58);border-radius:16px;
+    padding:26px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;color:#fff;
+  }
+  .demo .mini{
+    width:188px;flex:none;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 16px 30px -16px rgba(0,0,0,.6)
+  }
+  .demo .mini .bar{height:22px;background:linear-gradient(#FBFCFF,#EEF2FA);display:flex;align-items:center;padding:0 8px;gap:4px;border-bottom:1px solid #E5EBF2}
+  .demo .mini .bar i{width:6px;height:6px;border-radius:50%;background:#D3DBE4;display:block}
+  .demo .mini .body{padding:11px}
+  .demo .mini .sr{height:18px;border-radius:5px;background:var(--brand-soft);border:1px solid #CDEAF8;margin-bottom:9px}
+  .demo .mini .row{display:flex;gap:6px;margin-bottom:6px}
+  .demo .mini .row .ph{height:26px;border-radius:4px;flex:1;background:linear-gradient(180deg,#D89189,#F4EBDF 60%,#CE867E)}
+  .demo .txt{flex:1;min-width:230px}
+  .demo .txt h3{margin:0 0 6px;font-size:18px;color:#fff}
+  .demo .txt p{margin:0 0 16px;font-size:13.5px;color:#BFD7E4;line-height:1.7}
+  .demo .btn{
+    background:var(--brand);color:#fff;border-radius:11px;padding:13px 22px;font-size:15px;font-weight:700;
+    text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:.15s;
+  }
+  .demo .btn:hover{background:#19A8EC}
+  .demo .sub{display:block;margin-top:10px;font-size:12px;color:#9FC0D1}
+
+  /* 価格 */
+  .price-band{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 26px 22px;text-align:center;
+  }
+  .price-band .label{font-size:13px;color:var(--mut);font-weight:700}
+  .price-band .amount{font-size:clamp(30px,6vw,46px);font-weight:800;color:var(--ink);margin:6px 0 2px;letter-spacing:.01em}
+  .price-band .amount small{font-size:18px;font-weight:700;color:var(--ink-2)}
+  .price-band .note{font-size:13px;color:var(--mut);margin:4px 0 0}
+  .price-why{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .price-why .pw{background:var(--brand-tint);border:1px solid #D5EEF9;border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink-2);text-align:left}
+  .price-why .pw b{color:var(--brand-dark);display:block;margin-bottom:3px;font-size:13.5px}
+
+  /* 見込み質問カード */
+  .ask{
+    margin-top:26px;background:linear-gradient(180deg,var(--brand-soft),#fff);border:1.5px solid #C9EAF8;
+    border-radius:16px;padding:24px 24px 22px;
+  }
+  .ask .ask-h{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .ask .ask-h .q{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+  .ask .ask-h h3{margin:0;font-size:17px}
+  .ask .ask-sub{margin:0 0 18px;font-size:13.5px;color:var(--ink-2)}
+  .scen{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.scen{grid-template-columns:1fr}}
+  .scen .s{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px 18px 16px}
+  .scen .s .p{font-size:13px;color:var(--mut);font-weight:700}
+  .scen .s .v{font-size:30px;font-weight:800;color:var(--brand-dark);margin:2px 0 12px;letter-spacing:.01em}
+  .scen .s .v small{font-size:15px;color:var(--ink-2)}
+  .scen .s label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+  .scen .s input{
+    width:100%;height:46px;border:2px solid var(--line);border-radius:10px;padding:0 14px;font-size:16px;
+    font-family:inherit;outline:0;transition:.15s;color:var(--ink);
+  }
+  .scen .s input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+  .ask .memo{margin:14px 0 0;font-size:11.5px;color:var(--mut)}
+
+  /* ヒアリング */
+  .hear{display:grid;gap:14px}
+  .hgrp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .hgrp h3{margin:0 0 12px;font-size:15.5px;display:flex;align-items:center;gap:9px}
+  .hgrp h3 .t{width:24px;height:24px;border-radius:7px;background:var(--brand-soft);color:var(--brand-dark);display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}
+  .hgrp ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+  .hgrp li{display:flex;gap:10px;font-size:13.8px;color:var(--ink-2);line-height:1.65}
+  .hgrp li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--brand);flex:none;margin-top:8px}
+
+  /* スケジュール */
+  .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:560px){.tl{grid-template-columns:1fr}}
+  .tl .t{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px;position:relative}
+  .tl .t .wk{font-size:11.5px;font-weight:800;color:var(--brand);letter-spacing:.05em}
+  .tl .t h4{margin:5px 0 5px;font-size:14.5px}
+  .tl .t p{margin:0;font-size:12.6px;color:var(--mut);line-height:1.6}
+  .tl-note{margin-top:14px;font-size:13px;color:var(--ink-2);background:var(--ok-soft);border:1px solid #CDEBDB;border-radius:11px;padding:12px 16px}
+  .tl-note b{color:var(--ok)}
+
+  /* 次の一歩 */
+  .next{background:linear-gradient(135deg,var(--brand),#19A8EC);border-radius:18px;padding:30px 30px;color:#fff}
+  .next h2{margin:0 0 10px;font-size:23px;color:#fff}
+  .next p{margin:0 0 18px;font-size:15px;color:#EAF7FE;line-height:1.8}
+  .next .contact{display:flex;flex-wrap:wrap;gap:8px 26px;font-size:14px;border-top:1px solid rgba(255,255,255,.3);padding-top:18px}
+  .next .contact b{display:block;font-size:12px;color:#CDEAF8;font-weight:700}
+  .next .contact a{color:#fff;text-decoration:none;font-weight:700}
+
+  footer{padding:30px 0 50px;text-align:center;color:var(--mut);font-size:11.5px}
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="logo"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="#fff" stroke-width="1.7"/><circle cx="11.5" cy="13" r="2.6" stroke="#fff" stroke-width="1.7"/></svg></div>
+    <div class="who">画像カルテ <span>／ 株式会社G TECH JAPAN</span></div>
+    <a class="cta" href="./" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>実際のUIを見る</span>
+    </a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">ササキ株式会社 志和 様へのご提案</span>
+    <h1>「写真をきちんと残して、<br><span class="nm">点数を取る</span>」ためだけのアプリ</h1>
+    <p class="lead">2026年4月の保険算定改定に対応する、口腔内写真（静止画）の管理アプリ <b>「画像カルテ」（仮称）</b> のご提案です。便利機能を足さず、保険算定に必要なことだけに絞りました。</p>
+    <div class="addr">
+      <span><b>ご提案先：</b>ササキ株式会社 志和 様</span>
+      <span><b>提案：</b>株式会社G TECH JAPAN</span>
+      <span><b>日付：</b><span class="tnum">2026年6月</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- なぜ今 -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">BACKGROUND</p>
+  <h2 class="sec">なぜ、いま必要なのか</h2>
+  <p class="sec-lead">2026年4月の改定で、口腔内写真の「管理」が点数算定の条件になりました。多くの医院で、ここが取りこぼしになっています。</p>
+  <div class="why">
+    <div class="c"><div class="no">01</div><h3>算定の条件になった</h3><p>口腔内写真（静止画）を撮影し、適切に管理していることが保険点数算定の条件に加わりました。</p></div>
+    <div class="c"><div class="no">02</div><h3>多くは撮りっぱなし</h3><p>撮影しても患者ごとに整理・保存されておらず、せっかくの写真が点数につながっていない医院が少なくありません。</p></div>
+    <div class="c"><div class="no">03</div><h3>必要なのは「管理の証明」</h3><p>「きちんと管理されている状態」を、誰でも・最小の手間でつくれる仕組みが求められています。</p></div>
+  </div>
+</div></section>
+
+<!-- 解決策 -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">SOLUTION</p>
+  <h2 class="sec">ご提案：超ミニマルな「画像カルテ」</h2>
+  <p class="sec-lead">コンセプトは「点数を取れるためだけ」。便利機能を一切足さないので、ITが苦手な先生でも迷いません。</p>
+  <div class="feat">
+    <div class="f"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="11" r="2" stroke="currentColor" stroke-width="1.7"/><path d="m6 17 4-3 3 2 2-2 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h4>静止画だけを管理</h4><p>動画は扱いません。保険算定に必要な静止画の保存に特化。</p></div></div>
+    <div class="f"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div><h4>患者ごとに保存</h4><p>カルテ番号＋氏名で登録し、その患者に写真を紐づけて保管。</p></div></div>
+    <div class="f"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div><h4>かんたん検索</h4><p>カルテ番号で検索。桁数違いでも前方一致で候補を一覧表示。</p></div></div>
+    <div class="f"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div><h4>撮影日時で自動整理</h4><p>画像の撮影日時を自動で読み取り日付ごとに整列。無い場合は後から設定可能。</p></div></div>
+    <div class="f"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M15 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div><h4>取り違えのリカバリー</h4><p>カルテ番号を間違えて取り込んでも、別の患者へまとめて付け替え可能。</p></div></div>
+    <div class="f"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div><h4>ローカル保存・ネット不要</h4><p>医院のPCに保存。クラウド不使用・常時接続も不要で導入が手軽。</p></div></div>
+  </div>
+  <div class="notdo"><b>あえて「やらないこと」：</b>動画・比較機能・タグ・全体検索・患者への提示用途。余計なものを足さないことが、現場での分かりやすさと低価格の両立につながります。</div>
+
+  <div class="demo">
+    <div class="mini" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <div class="body"><div class="sr"></div><div class="row"><span class="ph"></span><span class="ph"></span></div><div class="row"><span class="ph"></span><span class="ph"></span></div></div>
+    </div>
+    <div class="txt">
+      <h3>実際の画面を、その場で操作できます</h3>
+      <p>完成イメージをクリックで操作いただけるデモをご用意しました。スマホ・タブレットでもそのままお試しいただけます。</p>
+      <a class="btn" href="./" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        UIデモを開く
+      </a>
+      <span class="sub">takane3751.github.io/sasaki-ui-preview/</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- ターゲット -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">TARGET</p>
+  <h2 class="sec">どの先生に届く製品か</h2>
+  <p class="sec-lead">高機能・月額型のサービスは敬遠されがちな層にこそ、まっすぐ届きます。</p>
+  <div class="why">
+    <div class="c"><div class="no">◯</div><h3>保険診療が中心の医院</h3><p>自費中心ではなく、保険診療を主とされ、設備投資には慎重——という多数派の医院です。</p></div>
+    <div class="c"><div class="no">◯</div><h3>買い切り・低価格を好む</h3><p>サブスクや高機能より「安く・一度きり・点数に直結」を歓迎いただける層です。</p></div>
+    <div class="c"><div class="no">◯</div><h3>ササキ様の販路の中心</h3><p>まさにササキ様が日頃お付き合いされている先生方に、自然にご案内いただける製品です。</p></div>
+  </div>
+</div></section>
+
+<!-- 価格 + 見込み質問 -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">PRICING</p>
+  <h2 class="sec">価格のご提案</h2>
+  <p class="sec-lead">月額ではなく、先生が好まれる「買い切り（一括）」を想定しています。</p>
+
+  <div class="price-band">
+    <div class="label">想定価格（買い切り・税別）</div>
+    <div class="amount tnum">3<small>万円</small> 〜 5<small>万円</small></div>
+    <p class="note">サブスクではなく一括購入。一度の負担で、ずっと使えるかたち。</p>
+    <div class="price-why">
+      <div class="pw"><b>なぜ買い切りか</b>先生はサブスクを敬遠され、安価な買い切りを最も好まれるためです。</div>
+      <div class="pw"><b>市場感</b>競合製品が1万円台で一定数導入されている市場。本製品は保険算定特化で価値を明確化します。</div>
+    </div>
+  </div>
+
+  <div class="ask">
+    <div class="ask-h"><span class="q">?</span><h3>志和様に、ぜひお伺いしたいこと</h3></div>
+    <p class="ask-sub">それぞれの価格で、担当されている先生のうち <b>どれくらいに導入いただけそうか</b> の肌感覚を教えてください。（下の欄はその場でのメモ用です）</p>
+    <div class="scen">
+      <div class="s">
+        <div class="p">もし この価格なら</div>
+        <div class="v tnum">3<small>万円</small></div>
+        <label>導入が見込めそうな本数・割合は？</label>
+        <input type="text" inputmode="numeric" placeholder="例）全国で◯◯本／担当先の◯割">
+      </div>
+      <div class="s">
+        <div class="p">もし この価格なら</div>
+        <div class="v tnum">5<small>万円</small></div>
+        <label>導入が見込めそうな本数・割合は？</label>
+        <input type="text" inputmode="numeric" placeholder="例）全国で◯◯本／担当先の◯割">
+      </div>
+    </div>
+    <p class="memo">※ 価格が上がると本数は減る前提で、「3万なら多く・5万なら厳選」など、肌感での比較を教えていただけると助かります。</p>
+  </div>
+</div></section>
+
+<!-- ヒアリング -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">HEARING</p>
+  <h2 class="sec">販売までの流れ・ご相談したいこと</h2>
+  <p class="sec-lead">どう売るのが一番うまくいくか、ササキ様のご知見をお借りしたい論点です。</p>
+  <div class="hear">
+    <div class="hgrp">
+      <h3><span class="t">A</span>販売・提供のかたち</h3>
+      <ul>
+        <li>弊社製品として販売／ササキ様のブランド（OEM）として販売、どちらが先生に売りやすいでしょうか。</li>
+        <li>卸条件・価格設定について、ご希望やお考えはありますか。</li>
+      </ul>
+    </div>
+    <div class="hgrp">
+      <h3><span class="t">B</span>お取引のかたち</h3>
+      <ul>
+        <li>「1本ごとの売り切り」と「販売本数に応じた継続的な取り決め」、どちらが望ましいでしょうか。</li>
+      </ul>
+    </div>
+    <div class="hgrp">
+      <h3><span class="t">C</span>営業の進め方・時期</h3>
+      <ul>
+        <li>担当の先生方へは、どのようにご案内・展開するのが効果的でしょうか。</li>
+        <li>全国へ一斉にご案内いただける、理想的なタイミングはいつ頃でしょうか。（弊社は夏までの提供を目標にしています）</li>
+      </ul>
+    </div>
+    <div class="hgrp">
+      <h3><span class="t">D</span>製品仕様の要否</h3>
+      <ul>
+        <li>レセコンからのカルテ番号連携（CSV取込）は必要でしょうか。（無くても運用は可能です）</li>
+        <li>配布方法は「ダウンロードしてすぐ利用」「ライセンスコードで認証」、どちらが望ましいでしょうか。</li>
+      </ul>
+    </div>
+    <div class="hgrp">
+      <h3><span class="t">E</span>サポート体制</h3>
+      <ul>
+        <li>導入後の問い合わせ・サポートの窓口は、ササキ様・弊社のどちらが望ましいでしょうか。</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- スケジュール -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">SCHEDULE</p>
+  <h2 class="sec">開発スケジュール（目標）</h2>
+  <p class="sec-lead">超ミニマル構成のため、テストを含めて約2ヶ月での提供を目標にしています。</p>
+  <div class="tl">
+    <div class="t"><div class="wk">STEP 1 ／ 〜2週</div><h4>要件確定・準備</h4><p>画面設計（本デモ）をもとに仕様を確定し、開発環境を整えます。</p></div>
+    <div class="t"><div class="wk">STEP 2 ／ 3〜6週</div><h4>開発</h4><p>患者登録・検索・画像取込・日付整理・付け替えなど、中核機能を実装。</p></div>
+    <div class="t"><div class="wk">STEP 3 ／ 7〜8週</div><h4>テスト・ご提供</h4><p>Windows向けに書き出し、動作確認のうえデモ・最終調整して納品。</p></div>
+  </div>
+  <p class="tl-note"><b>狙い：</b>夏の全国展開に間に合うよう進めます。早く出せるほど、先生方への普及も早まります。</p>
+</div></section>
+
+<!-- 次の一歩 -->
+<section class="blk"><div class="wrap">
+  <div class="next">
+    <h2>まずは、率直なご意見をください</h2>
+    <p>「この形・この価格で売れそうか」——志和様の肌感覚が、いちばん知りたいところです。ご感触をふまえて、正式な仕様・価格・提供時期を確定してまいります。まずはデモをお手元で触ってみてください。</p>
+    <div class="contact">
+      <span><b>提案</b>株式会社G TECH JAPAN</span>
+      <span><b>担当</b>髙根 弘二（コウジ）</span>
+      <span><b>連絡先</b><a href="mailto:takane@g-tech-japan.co.jp">takane@g-tech-japan.co.jp</a></span>
+    </div>
+  </div>
+</div></section>
+
+<footer>本資料は株式会社G TECH JAPANが作成した提案資料です（仮称・検討段階の内容を含みます）。</footer>
