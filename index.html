@@ -14,6 +14,8 @@
     --line-2:#E8EEF0;
     --ok:#2E9E6B;
     --ok-soft:#E5F4EC;
+    --warn:#C7791B;
+    --warn-soft:#FBF0E2;
     --shadow:0 24px 60px -24px rgba(20,50,55,.45);
     --r:14px;
     --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Meiryo",system-ui,sans-serif;
@@ -33,211 +35,156 @@
   }
   .wrap{max-width:1040px;margin:0 auto}
 
-  /* ---- プロトタイプ説明バー ---- */
-  .proto-head{
-    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
-    margin:4px 4px 18px;
-  }
+  /* ---- プロトタイプ説明 ---- */
+  .proto-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:4px 4px 18px}
   .proto-head .badge{
     font-size:11px;letter-spacing:.14em;font-weight:700;color:var(--teal);
-    background:var(--teal-soft);padding:5px 11px;border-radius:999px;
-    border:1px solid #CDE5E6;white-space:nowrap;
+    background:var(--teal-soft);padding:5px 11px;border-radius:999px;border:1px solid #CDE5E6;white-space:nowrap;
   }
   .proto-head h1{font-size:21px;margin:0;letter-spacing:.01em}
   .proto-head .sub{font-size:13px;color:var(--mut);margin:0}
 
-  .flowbar{
-    display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-    margin:0 4px 20px;font-size:12.5px;color:var(--mut);
-  }
+  .flowbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 4px 20px;font-size:12.5px;color:var(--mut)}
   .flowbar .step{
-    display:inline-flex;align-items:center;gap:7px;
-    padding:6px 12px;border-radius:999px;background:var(--surface);
-    border:1px solid var(--line);transition:.18s;cursor:pointer;color:var(--ink-2);
-    font-weight:600;
+    display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:var(--surface);
+    border:1px solid var(--line);transition:.18s;cursor:pointer;color:var(--ink-2);font-weight:600;
   }
   .flowbar .step .n{
-    width:18px;height:18px;border-radius:50%;background:var(--line-2);
-    display:grid;place-items:center;font-size:11px;color:var(--mut);font-weight:700;
+    width:18px;height:18px;border-radius:50%;background:var(--line-2);display:grid;place-items:center;
+    font-size:11px;color:var(--mut);font-weight:700;
   }
   .flowbar .step.active{background:var(--teal);border-color:var(--teal);color:#fff}
   .flowbar .step.active .n{background:rgba(255,255,255,.25);color:#fff}
   .flowbar .arr{color:var(--line);font-size:14px}
 
   /* ---- アプリウィンドウ ---- */
-  .window{
-    background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);
-    overflow:hidden;border:1px solid var(--line);
-  }
+  .window{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--line)}
   .titlebar{
-    height:42px;display:flex;align-items:center;gap:10px;
-    padding:0 14px;background:linear-gradient(#FBFDFD,#EEF3F4);
-    border-bottom:1px solid var(--line);
+    height:42px;display:flex;align-items:center;gap:10px;padding:0 14px;
+    background:linear-gradient(#FBFDFD,#EEF3F4);border-bottom:1px solid var(--line);
   }
   .titlebar .app-ico{
-    width:22px;height:22px;border-radius:6px;flex:none;
-    background:linear-gradient(135deg,var(--teal),#2BA7B0);
+    width:22px;height:22px;border-radius:6px;flex:none;background:linear-gradient(135deg,var(--teal),#2BA7B0);
     display:grid;place-items:center;color:#fff;
   }
   .titlebar .app-name{font-size:13px;font-weight:700;letter-spacing:.02em}
   .titlebar .app-ver{font-size:11px;color:var(--mut)}
-  .titlebar .winctl{margin-left:auto;display:flex;gap:0}
-  .titlebar .winctl button{
-    width:40px;height:42px;border:0;background:transparent;color:var(--mut);
-    font-size:13px;cursor:default;display:grid;place-items:center;
-  }
+  .titlebar .winctl{margin-left:auto;display:flex}
+  .titlebar .winctl button{width:40px;height:42px;border:0;background:transparent;color:var(--mut);font-size:13px;cursor:default;display:grid;place-items:center}
   .titlebar .winctl button:hover{background:rgba(0,0,0,.05)}
   .titlebar .winctl button.cls:hover{background:#E5484D;color:#fff}
 
-  .stage{position:relative;height:620px;background:var(--surface)}
-  .screen{
-    position:absolute;inset:0;display:none;flex-direction:column;
-    animation:fade .22s ease;
-  }
+  .stage{position:relative;height:640px;background:var(--surface)}
+  .screen{position:absolute;inset:0;display:none;flex-direction:column;animation:fade .22s ease}
   .screen.show{display:flex}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){.screen{animation:none}}
 
-  /* ---- 共通：画面内ヘッダー ---- */
-  .topbar{
-    display:flex;align-items:center;gap:14px;padding:16px 26px;
-    border-bottom:1px solid var(--line-2);background:var(--surface-2);
-  }
-  .back{
-    display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);
-    background:#fff;border-radius:10px;padding:9px 15px;font-size:14px;font-weight:600;
-    color:var(--ink-2);cursor:pointer;transition:.15s;font-family:inherit;
-  }
-  .back:hover{border-color:var(--teal);color:var(--teal)}
-  .pt-id{
-    font-variant-numeric:tabular-nums;font-weight:800;font-size:17px;letter-spacing:.02em;
-  }
-  .pt-name{font-size:17px;font-weight:700}
-  .pt-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .chip{
-    font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;
-    background:var(--teal-soft);color:var(--teal-dark);
-  }
-  .chip-ok{background:var(--ok-soft);color:var(--ok);display:inline-flex;gap:5px;align-items:center}
-
+  /* ---- 共通ボタン ---- */
   .btn-primary{
-    border:0;background:var(--teal);color:#fff;border-radius:11px;
-    padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;
-    font-family:inherit;transition:.15s;box-shadow:0 6px 16px -8px rgba(18,124,134,.8);
+    border:0;background:var(--teal);color:#fff;border-radius:11px;padding:12px 20px;font-size:15px;font-weight:700;
+    cursor:pointer;font-family:inherit;transition:.15s;box-shadow:0 6px 16px -8px rgba(18,124,134,.8);
     display:inline-flex;align-items:center;gap:9px;
   }
   .btn-primary:hover{background:var(--teal-dark)}
   .btn-primary:active{transform:translateY(1px)}
+  .btn-primary[disabled]{background:#AEC4C7;box-shadow:none;cursor:not-allowed}
   .btn-ghost{
-    border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:11px;
-    padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;
+    border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:11px;padding:12px 20px;
+    font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;
   }
   .btn-ghost:hover{border-color:var(--mut)}
 
+  /* ---- 0. ログイン ---- */
+  .login{align-items:center;justify-content:center;background:
+    radial-gradient(700px 360px at 50% 0%, var(--teal-soft) 0%, transparent 65%), var(--surface)}
+  .login-card{width:380px;max-width:90%;text-align:center;display:flex;flex-direction:column;gap:6px}
+  .login-logo{
+    width:64px;height:64px;border-radius:18px;margin:0 auto 8px;background:linear-gradient(135deg,var(--teal),#2BA7B0);
+    display:grid;place-items:center;color:#fff;box-shadow:0 12px 26px -10px rgba(18,124,134,.7);
+  }
+  .login-card h2{margin:0;font-size:22px;letter-spacing:.02em}
+  .login-card .tag{color:var(--mut);font-size:13px;margin:0 0 14px}
+  .login-field{text-align:left;margin-top:12px}
+  .login-field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+  .login-field input{
+    width:100%;height:50px;border:2px solid var(--line);border-radius:12px;padding:0 15px;font-size:16px;
+    font-family:inherit;outline:0;transition:.15s;color:var(--ink);
+  }
+  .login-field input:focus{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+  .login-card .btn-primary{justify-content:center;height:52px;margin-top:20px;font-size:16px}
+  .login-alt{font-size:12.5px;color:var(--mut);margin-top:14px}
+  .login-alt a{color:var(--teal);text-decoration:none;font-weight:600;cursor:pointer}
+
   /* ---- 1. 検索画面 ---- */
-  .home{justify-content:flex-start}
-  .home-hero{
-    padding:46px 26px 26px;text-align:center;
-  }
-  .home-hero h2{font-size:24px;margin:0 0 6px;letter-spacing:.02em}
+  .home{justify-content:center}
+  .home-hero{padding:0 26px;text-align:center}
+  .home-hero h2{font-size:25px;margin:0 0 6px;letter-spacing:.02em}
   .home-hero p{margin:0;color:var(--mut);font-size:14px}
-  .search-row{
-    display:flex;gap:12px;max-width:560px;margin:26px auto 0;
-  }
+  .search-row{display:flex;gap:12px;max-width:560px;margin:30px auto 0}
   .search-input{
-    flex:1;display:flex;align-items:center;gap:12px;background:#fff;
-    border:2px solid var(--line);border-radius:14px;padding:0 18px;height:62px;transition:.15s;
+    flex:1;display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);
+    border-radius:14px;padding:0 18px;height:64px;transition:.15s;
   }
   .search-input:focus-within{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
   .search-input svg{flex:none;color:var(--mut)}
   .search-input input{
-    border:0;outline:0;font-size:20px;font-family:inherit;width:100%;
-    font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--ink);background:transparent;
+    border:0;outline:0;font-size:21px;font-family:inherit;width:100%;font-variant-numeric:tabular-nums;
+    letter-spacing:.04em;color:var(--ink);background:transparent;
   }
   .search-input input::placeholder{color:#A9B6BA;letter-spacing:0}
   .search-go{
-    border:0;background:var(--teal);color:#fff;border-radius:14px;padding:0 28px;height:62px;
-    font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;flex:none;transition:.15s;
+    border:0;background:var(--teal);color:#fff;border-radius:14px;padding:0 30px;height:64px;font-size:18px;
+    font-weight:700;cursor:pointer;font-family:inherit;flex:none;transition:.15s;
   }
   .search-go:hover{background:var(--teal-dark)}
-  .or-new{margin:22px auto 0;text-align:center}
-  .or-new .or{font-size:13px;color:var(--mut);margin-bottom:12px;display:flex;align-items:center;gap:14px;max-width:560px;margin-inline:auto}
+  .or-new{margin:24px auto 0;text-align:center}
+  .or-new .or{font-size:13px;color:var(--mut);margin-bottom:14px;display:flex;align-items:center;gap:14px;max-width:560px;margin-inline:auto}
   .or-new .or::before,.or-new .or::after{content:"";flex:1;height:1px;background:var(--line)}
   .btn-new{
-    border:2px dashed var(--line);background:var(--surface-2);color:var(--teal-dark);
-    border-radius:14px;padding:16px 28px;font-size:16px;font-weight:700;cursor:pointer;
-    font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:10px;
+    border:2px dashed var(--line);background:var(--surface-2);color:var(--teal-dark);border-radius:14px;
+    padding:16px 28px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;
+    display:inline-flex;align-items:center;gap:10px;
   }
   .btn-new:hover{border-color:var(--teal);background:var(--teal-soft)}
-
-  .recent{
-    margin-top:30px;border-top:1px solid var(--line-2);flex:1;overflow:auto;
-  }
-  .recent h3{
-    font-size:12px;letter-spacing:.12em;color:var(--mut);font-weight:700;
-    margin:0;padding:18px 26px 10px;
-  }
-  .pt-row{
-    display:flex;align-items:center;gap:16px;padding:14px 26px;cursor:pointer;
-    border-bottom:1px solid var(--line-2);transition:.13s;
-  }
-  .pt-row:hover{background:var(--surface-2)}
-  .pt-row .num{
-    font-variant-numeric:tabular-nums;font-weight:800;font-size:15px;
-    min-width:84px;color:var(--teal-dark);
-  }
-  .pt-row .nm{font-weight:700;font-size:15px;flex:1}
-  .pt-row .cnt{font-size:13px;color:var(--mut)}
-  .pt-row .go{color:var(--line);font-size:18px}
-  .pt-row:hover .go{color:var(--teal)}
 
   .statusbar{
     border-top:1px solid var(--line-2);padding:10px 26px;font-size:12px;color:var(--mut);
     display:flex;align-items:center;gap:8px;background:var(--surface-2);
   }
+  .home .statusbar{position:absolute;left:0;right:0;bottom:0}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
 
-  /* ---- 2. 新規登録モーダル ---- */
-  .overlay{
-    position:absolute;inset:0;background:rgba(18,40,45,.42);
-    display:none;align-items:center;justify-content:center;z-index:20;
-    backdrop-filter:blur(2px);
+  /* ---- 共通：画面内ヘッダー ---- */
+  .topbar{display:flex;align-items:center;gap:14px;padding:16px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+  .back{
+    display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:9px 15px;font-size:14px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:.15s;font-family:inherit;
   }
-  .overlay.show{display:flex;animation:fade .18s ease}
-  .modal{
-    background:#fff;border-radius:18px;width:440px;max-width:92%;
-    box-shadow:0 30px 70px -20px rgba(10,30,35,.6);overflow:hidden;
-  }
-  .modal h3{
-    margin:0;padding:22px 26px 4px;font-size:19px;
-  }
-  .modal .modal-sub{padding:0 26px;color:var(--mut);font-size:13px;margin:0}
-  .field{padding:16px 26px 0}
-  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:7px}
-  .field label .req{color:#E5484D;font-size:12px;margin-left:4px}
-  .field input{
-    width:100%;height:52px;border:2px solid var(--line);border-radius:12px;
-    padding:0 16px;font-size:18px;font-family:inherit;outline:0;transition:.15s;
-    font-variant-numeric:tabular-nums;color:var(--ink);
-  }
-  .field input::placeholder{font-variant-numeric:normal;color:#B4C0C4}
-  .field input:focus{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
-  .modal-actions{
-    display:flex;gap:12px;justify-content:flex-end;padding:24px 26px 26px;margin-top:8px;
-  }
+  .back:hover{border-color:var(--teal);color:var(--teal)}
+  .pt-id{font-variant-numeric:tabular-nums;font-weight:800;font-size:17px;letter-spacing:.02em}
+  .pt-name{font-size:17px;font-weight:700}
+  .pt-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .chip{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--teal-soft);color:var(--teal-dark)}
+  .chip-ok{background:var(--ok-soft);color:var(--ok);display:inline-flex;gap:5px;align-items:center}
 
   /* ---- 3. 画像一覧 ---- */
-  .gallery-body{flex:1;overflow:auto;padding:24px 26px}
-  .gal-hint{
-    font-size:13px;color:var(--mut);margin:0 0 16px;display:flex;align-items:center;gap:8px;
+  .gallery-body{flex:1;overflow:auto;padding:22px 26px 16px}
+  .date-group{margin-bottom:24px}
+  .date-head{
+    display:flex;align-items:center;gap:10px;margin:0 0 13px;font-size:13.5px;font-weight:800;color:var(--ink-2);
+    letter-spacing:.02em;font-variant-numeric:tabular-nums;
   }
-  .grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;
+  .date-head .bar{width:4px;height:16px;border-radius:2px;background:var(--teal)}
+  .date-head .cnt{font-weight:600;color:var(--mut);font-size:12px}
+  .date-group.undated .date-head{color:var(--warn)}
+  .date-group.undated .date-head .bar{background:var(--warn)}
+  .undated-note{
+    background:var(--warn-soft);border:1px solid #ECD6B4;border-radius:10px;padding:9px 13px;margin:0 0 13px;
+    font-size:12.5px;color:#8A5A12;display:flex;gap:8px;align-items:flex-start;
   }
-  .thumb{
-    border:1px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;
-    background:#fff;transition:.16s;
-  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px}
+  .thumb{border:1px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;background:#fff;transition:.16s;position:relative}
   .thumb:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 14px 26px -16px rgba(18,124,134,.6)}
   .photo{
     height:150px;position:relative;
@@ -246,49 +193,60 @@
       linear-gradient(180deg,#C97F77 0%,#D89189 32%,#E9D9C9 33%,#F4EBDF 60%,#E7CFC0 61%,#CE867E 100%);
   }
   .photo::after{
-    content:"";position:absolute;left:14%;right:14%;top:38%;height:24%;
-    border-radius:6px;
-    background:repeating-linear-gradient(90deg,#FBF6EE 0 11px,#E7D7C6 11px 13px);
-    box-shadow:inset 0 2px 4px rgba(0,0,0,.12);
+    content:"";position:absolute;left:14%;right:14%;top:38%;height:24%;border-radius:6px;
+    background:repeating-linear-gradient(90deg,#FBF6EE 0 11px,#E7D7C6 11px 13px);box-shadow:inset 0 2px 4px rgba(0,0,0,.12);
   }
-  .photo .vlabel{
-    position:absolute;left:10px;bottom:9px;z-index:2;
-    background:rgba(20,40,45,.62);color:#fff;font-size:11px;font-weight:700;
-    padding:4px 9px;border-radius:7px;letter-spacing:.02em;
+  .thumb .cap{padding:9px 13px;display:flex;justify-content:flex-end;align-items:center;font-size:12.5px;color:var(--mut)}
+  .thumb .cap .t{font-variant-numeric:tabular-nums}
+  .thumb .cap .nodate{color:var(--warn);font-weight:700}
+  /* チェックボックス（選択モード） */
+  .check{
+    position:absolute;top:9px;left:9px;width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.92);
+    border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25);display:none;place-items:center;color:transparent;z-index:3;
   }
-  .thumb .cap{
-    padding:10px 13px;display:flex;justify-content:space-between;align-items:center;
-    font-size:12.5px;color:var(--mut);
-  }
-  .thumb .cap .d{font-variant-numeric:tabular-nums}
+  .gallery-body.selmode .check{display:grid}
+  .gallery-body.selmode .thumb:hover{transform:none;box-shadow:none;border-color:var(--line)}
+  .thumb.sel{outline:3px solid var(--teal);outline-offset:-1px}
+  .thumb.sel .check{background:var(--teal);border-color:var(--teal);color:#fff}
+  .thumb.sel .photo{filter:brightness(.94)}
+
   .add-tile{
-    border:2px dashed var(--line);border-radius:13px;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:10px;color:var(--teal-dark);cursor:pointer;
-    min-height:212px;background:var(--surface-2);transition:.15s;font-weight:700;font-size:14px;
+    border:2px dashed var(--line);border-radius:13px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:10px;color:var(--teal-dark);cursor:pointer;min-height:191px;background:var(--surface-2);
+    transition:.15s;font-weight:700;font-size:14px;
   }
   .add-tile:hover{border-color:var(--teal);background:var(--teal-soft)}
-  .add-tile .plus{
-    width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid var(--line);
-    display:grid;place-items:center;font-size:24px;color:var(--teal);
-  }
+  .gallery-body.selmode .add-tile{display:none}
+  .add-tile .plus{width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:24px;color:var(--teal)}
 
-  /* 空状態（新規登録直後） */
-  .empty{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:18px;text-align:center;padding:40px;
-  }
-  .empty .icon{
-    width:84px;height:84px;border-radius:24px;background:var(--teal-soft);
-    display:grid;place-items:center;color:var(--teal);
-  }
+  /* 空状態 */
+  .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:40px}
+  .empty .icon{width:84px;height:84px;border-radius:24px;background:var(--teal-soft);display:grid;place-items:center;color:var(--teal)}
   .empty h3{margin:0;font-size:19px}
   .empty p{margin:0;color:var(--mut);font-size:14px;max-width:360px}
 
+  /* 下部ツールバー（通常 / 選択モード） */
+  .gal-toolbar{
+    border-top:1px solid var(--line-2);background:var(--surface-2);padding:12px 26px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .gal-toolbar .tb-info{font-size:12.5px;color:var(--mut);display:flex;align-items:center;gap:8px}
+  .gal-toolbar .tb-info b{color:var(--ink-2)}
+  .gal-toolbar .spacer{flex:1}
+  .gal-toolbar .tool-btn{
+    border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:10px;padding:10px 16px;
+    font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:7px;
+  }
+  .gal-toolbar .tool-btn:hover{border-color:var(--teal);color:var(--teal)}
+  .gal-toolbar .tool-btn svg{color:var(--teal)}
+  .mode-pill{
+    font-size:12px;font-weight:800;padding:5px 11px;border-radius:999px;background:var(--teal);color:#fff;letter-spacing:.02em;
+  }
+  .btn-sm{border-radius:10px;padding:10px 18px;font-size:14px}
+
   /* ---- 4. 画像詳細 ---- */
   .detail-body{flex:1;display:flex;flex-direction:column;background:#13262B}
-  .detail-stage{
-    flex:1;display:flex;align-items:center;justify-content:center;padding:30px;position:relative;
-  }
+  .detail-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:30px;position:relative}
   .big-photo{
     width:min(520px,80%);aspect-ratio:4/3;border-radius:14px;position:relative;overflow:hidden;
     box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
@@ -298,40 +256,47 @@
   }
   .big-photo::after{
     content:"";position:absolute;left:16%;right:16%;top:40%;height:22%;border-radius:10px;
-    background:repeating-linear-gradient(90deg,#FBF6EE 0 22px,#E7D7C6 22px 26px);
-    box-shadow:inset 0 3px 8px rgba(0,0,0,.14);
+    background:repeating-linear-gradient(90deg,#FBF6EE 0 22px,#E7D7C6 22px 26px);box-shadow:inset 0 3px 8px rgba(0,0,0,.14);
   }
-  .detail-bar{
-    display:flex;align-items:center;justify-content:space-between;gap:14px;
-    padding:14px 26px;background:#0E1F23;color:#CFE0E2;font-size:13.5px;
-  }
-  .detail-bar .vname{font-weight:700;color:#fff;font-size:15px}
+  .detail-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 26px;background:#0E1F23;color:#CFE0E2;font-size:13.5px}
+  .detail-bar .vname{font-weight:700;color:#fff;font-size:15px;font-variant-numeric:tabular-nums}
+  .detail-bar .vname.nodate{color:#E8B873}
   .detail-bar .meta{display:flex;gap:18px;color:#8FA6AA;font-variant-numeric:tabular-nums}
   .nav-btn{
-    position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
-    border:0;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer;
-    display:grid;place-items:center;transition:.15s;
+    position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:0;
+    background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer;display:grid;place-items:center;transition:.15s;
   }
   .nav-btn:hover{background:rgba(255,255,255,.25)}
   .nav-btn.prev{left:24px}.nav-btn.next{right:24px}
 
-  /* ---- 凡例（下） ---- */
-  .legend{
-    margin:26px 4px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;
+  /* ---- モーダル共通 ---- */
+  .overlay{position:absolute;inset:0;background:rgba(18,40,45,.42);display:none;align-items:center;justify-content:center;z-index:20;backdrop-filter:blur(2px)}
+  .overlay.show{display:flex;animation:fade .18s ease}
+  .modal{background:#fff;border-radius:18px;width:440px;max-width:92%;box-shadow:0 30px 70px -20px rgba(10,30,35,.6);overflow:hidden}
+  .modal h3{margin:0;padding:22px 26px 4px;font-size:19px}
+  .modal .modal-sub{padding:0 26px;color:var(--mut);font-size:13px;margin:0}
+  .field{padding:16px 26px 0}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:7px}
+  .field label .req{color:#E5484D;font-size:12px;margin-left:4px}
+  .field label .opt{color:var(--mut);font-size:12px;margin-left:4px;font-weight:600}
+  .field input{
+    width:100%;height:52px;border:2px solid var(--line);border-radius:12px;padding:0 16px;font-size:18px;
+    font-family:inherit;outline:0;transition:.15s;color:var(--ink);
   }
-  .legend .card{
-    background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
-  }
-  .legend .card .k{
-    font-size:11px;letter-spacing:.1em;color:var(--teal);font-weight:700;margin-bottom:6px;
-  }
+  .field input[type="datetime-local"]{font-variant-numeric:tabular-nums}
+  .field input.num{font-variant-numeric:tabular-nums}
+  .field input::placeholder{color:#B4C0C4}
+  .field input:focus{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+  .modal-actions{display:flex;gap:12px;justify-content:flex-end;padding:24px 26px 26px;margin-top:8px}
+  .modal .sel-count{margin:14px 26px 0;background:var(--teal-soft);color:var(--teal-dark);border-radius:10px;padding:9px 13px;font-size:13px;font-weight:700}
+
+  /* ---- 凡例 ---- */
+  .legend{margin:26px 4px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .legend .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .legend .card .k{font-size:11px;letter-spacing:.1em;color:var(--teal);font-weight:700;margin-bottom:6px}
   .legend .card h4{margin:0 0 5px;font-size:14.5px}
   .legend .card p{margin:0;font-size:12.5px;color:var(--mut);line-height:1.55}
-
-  .foot-note{
-    margin:22px 4px 0;font-size:12px;color:var(--mut);line-height:1.7;
-    border-top:1px solid var(--line);padding-top:16px;
-  }
+  .foot-note{margin:22px 4px 0;font-size:12px;color:var(--mut);line-height:1.7;border-top:1px solid var(--line);padding-top:16px}
   .foot-note b{color:var(--ink-2)}
 </style>
 
@@ -342,12 +307,13 @@
     <h1>画像カルテ <span style="font-weight:400;color:var(--mut);font-size:15px">— 口腔内写真 静止画管理アプリ（仮称）</span></h1>
   </div>
   <p class="proto-head sub" style="margin:-10px 4px 18px">
-    ササキ向け／保険算定対策。下のステップまたは画面内のボタンを<b>クリックすると実際に操作</b>できます。「点数が取れるためだけ」の超ミニマル構成です。
+    ササキ向け／保険算定対策。下のステップまたは画面内のボタンを<b>クリックすると実際に操作</b>できます。
   </p>
 
-  <!-- フロー・ナビゲーター -->
   <div class="flowbar" id="flowbar">
-    <span class="step active" data-go="home"><span class="n">1</span>検索</span>
+    <span class="step active" data-go="login"><span class="n">0</span>ログイン</span>
+    <span class="arr">→</span>
+    <span class="step" data-go="home"><span class="n">1</span>検索</span>
     <span class="arr">→</span>
     <span class="step" data-go="register"><span class="n">2</span>新規登録</span>
     <span class="arr">→</span>
@@ -356,7 +322,6 @@
     <span class="step" data-go="detail"><span class="n">4</span>画像詳細</span>
   </div>
 
-  <!-- アプリウィンドウ -->
   <div class="window">
     <div class="titlebar">
       <div class="app-ico">
@@ -373,8 +338,29 @@
 
     <div class="stage" id="stage">
 
+      <!-- 0. ログイン -->
+      <section class="screen show login" data-screen="login">
+        <div class="login-card">
+          <div class="login-logo">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="#fff" stroke-width="1.6"/><circle cx="11.5" cy="13" r="3" stroke="#fff" stroke-width="1.6"/></svg>
+          </div>
+          <h2>画像カルテ</h2>
+          <p class="tag">ログインしてご利用ください</p>
+          <div class="login-field">
+            <label>メールアドレス</label>
+            <input id="loginId" type="text" placeholder="clinic@example.com" autocomplete="off">
+          </div>
+          <div class="login-field">
+            <label>パスワード</label>
+            <input id="loginPw" type="password" placeholder="••••••••" autocomplete="off">
+          </div>
+          <button class="btn-primary" id="loginBtn">ログイン</button>
+          <p class="login-alt">または <a id="licenseLink">ライセンスコードで認証</a></p>
+        </div>
+      </section>
+
       <!-- 1. 検索画面 -->
-      <section class="screen show home" data-screen="home">
+      <section class="screen home" data-screen="home">
         <div class="home-hero">
           <h2>患者を検索</h2>
           <p>カルテ番号を入力して、その患者の口腔内写真を表示します</p>
@@ -393,16 +379,7 @@
             </button>
           </div>
         </div>
-
-        <div class="recent">
-          <h3>最近登録した患者</h3>
-          <div id="recentList"></div>
-        </div>
-
-        <div class="statusbar">
-          <span class="dot"></span>
-          ローカル保存（このPC内）・<span id="ptCount">3</span>名の患者を管理中
-        </div>
+        <div class="statusbar"><span class="dot"></span>ローカル保存（このPC内）</div>
       </section>
 
       <!-- 3. 画像一覧 -->
@@ -425,8 +402,11 @@
             画像を取り込む
           </button>
         </div>
-        <div class="gallery-body" id="galleryBody"><!-- JS --></div>
-        <div class="statusbar"><span class="dot"></span>この患者の画像はこのPC内に保存されています</div>
+
+        <div class="gallery-body" id="galleryBody"></div>
+
+        <!-- 下部ツールバー -->
+        <div class="gal-toolbar" id="galToolbar"></div>
       </section>
 
       <!-- 4. 画像詳細 -->
@@ -446,23 +426,23 @@
             <button class="nav-btn next" id="detNext">›</button>
           </div>
           <div class="detail-bar">
-            <span class="vname" id="detView">正面観</span>
-            <span class="meta"><span>取込日：<span id="detDate">2026/06/20</span></span><span id="detIdx">1 / 5</span></span>
+            <span class="vname" id="detView">2026/06/20 14:30</span>
+            <span class="meta"><span id="detIdx">1 / 6</span></span>
           </div>
         </div>
       </section>
 
-      <!-- 2. 新規登録（オーバーレイ） -->
+      <!-- 新規登録モーダル -->
       <div class="overlay" id="overlay">
         <div class="modal">
           <h3>新規患者を登録</h3>
-          <p class="modal-sub">カルテ番号と氏名を入力してください</p>
+          <p class="modal-sub">カルテ番号を入力してください（氏名は任意）</p>
           <div class="field">
             <label>カルテ番号<span class="req">必須</span></label>
-            <input id="regId" inputmode="numeric" placeholder="例）12346" autocomplete="off">
+            <input id="regId" class="num" inputmode="numeric" placeholder="例）12346" autocomplete="off">
           </div>
           <div class="field">
-            <label>氏名<span class="req">必須</span></label>
+            <label>氏名<span class="opt">任意</span></label>
             <input id="regName" placeholder="例）佐藤 花子" autocomplete="off">
           </div>
           <div class="modal-actions">
@@ -472,37 +452,56 @@
         </div>
       </div>
 
+      <!-- 撮影日時変更モーダル -->
+      <div class="overlay" id="dateOverlay">
+        <div class="modal">
+          <h3>撮影日時を変更</h3>
+          <p class="modal-sub">選択した画像の撮影日時をまとめて設定します</p>
+          <div class="sel-count" id="dateSelCount">3枚を選択中</div>
+          <div class="field">
+            <label>撮影日時</label>
+            <input id="dateInput" type="datetime-local">
+          </div>
+          <div class="modal-actions">
+            <button class="btn-ghost" id="dateCancel">キャンセル</button>
+            <button class="btn-primary" id="dateExec">実行</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 紐付け変更モーダル -->
+      <div class="overlay" id="linkOverlay">
+        <div class="modal">
+          <h3>紐付けを変更</h3>
+          <p class="modal-sub">選択した画像を、別のカルテ番号の患者へ移動します</p>
+          <div class="sel-count" id="linkSelCount">3枚を選択中</div>
+          <div class="field">
+            <label>移動先のカルテ番号<span class="req">必須</span></label>
+            <input id="linkInput" class="num" inputmode="numeric" placeholder="例）12345" autocomplete="off">
+          </div>
+          <div class="modal-actions">
+            <button class="btn-ghost" id="linkCancel">キャンセル</button>
+            <button class="btn-primary" id="linkExec">実行</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <!-- 凡例 -->
   <div class="legend">
-    <div class="card">
-      <div class="k">SCREEN 1</div>
-      <h4>検索画面</h4>
-      <p>カルテ番号で検索、または「新規患者を登録」。最近の患者から直接開くこともできます。</p>
-    </div>
-    <div class="card">
-      <div class="k">SCREEN 2</div>
-      <h4>新規登録</h4>
-      <p>入力はカルテ番号＋氏名のみ。登録するとそのまま画像取込へ進みます。</p>
-    </div>
-    <div class="card">
-      <div class="k">SCREEN 3</div>
-      <h4>画像一覧</h4>
-      <p>患者ごとのサムネイル一覧。「画像を取り込む」でアップロード。1タップで詳細へ。</p>
-    </div>
-    <div class="card">
-      <div class="k">SCREEN 4</div>
-      <h4>画像詳細</h4>
-      <p>写真を拡大表示。戻るボタンで一覧へ。これ以上の機能は意図的に持たせていません。</p>
-    </div>
+    <div class="card"><div class="k">SCREEN 0</div><h4>ログイン</h4><p>メールアドレス／パスワード、またはライセンスコードで認証して起動します。</p></div>
+    <div class="card"><div class="k">SCREEN 1</div><h4>検索画面</h4><p>カルテ番号で検索、または「新規患者を登録」。入力は番号のみで進めます。</p></div>
+    <div class="card"><div class="k">SCREEN 3</div><h4>画像一覧</h4><p>撮影日時でグループ化し新しい順に表示。「撮影日時変更」「紐付け変更」で後から修正できます。</p></div>
+    <div class="card"><div class="k">SCREEN 4</div><h4>画像詳細</h4><p>写真を拡大表示。戻るボタンで一覧へ。</p></div>
   </div>
 
   <p class="foot-note">
-    <b>設計の割り切り</b>：保険算定で指摘された際に「ちゃんと管理しています」と提示できればよい、という用途に特化。<br>
-    <b>意図的に除外</b>：動画（picmoR競合回避）・タグ／自動振り分け・全体検索・比較機能・ロゴ／理念表示・患者提示用途。<br>
-    <b>技術前提</b>：Tauri＋React＋Rust／SQLite、Windowsデスクトップ、ローカル保存（クラウド不使用）、ネット接続時にアップデート配信。<br>
+    <b>日付の扱い</b>：取込時に画像のメタデータ（Exif）の撮影日時を自動採用。メタデータが無い画像は「日時未設定」として一覧最上部にまとめ、<b>撮影日時変更</b>で後から設定できます。<br>
+    <b>リカバリー</b>：カルテ番号を間違えて取り込んだ場合は、<b>紐付け変更</b>で対象画像にチェック→別のカルテ番号へ移動できます。<br>
+    <b>意図的に除外</b>：動画（picmoR競合回避）・タグ／部位名・自動振り分け・全体検索・比較機能・ロゴ／理念表示・患者提示用途。<br>
+    <b>技術前提</b>：Tauri＋React＋Rust／SQLite、Windowsデスクトップ、ローカル保存。<br>
     ＝ これは完成イメージ共有用のクリック可能なモックアップです（実データは入っていません）。
   </p>
 
@@ -510,61 +509,42 @@
 
 <script>
 (function(){
-  // サンプルデータ
-  var views=[
-    {v:"正面観",d:"2026/06/20"},
-    {v:"上顎咬合面",d:"2026/06/20"},
-    {v:"下顎咬合面",d:"2026/06/20"},
-    {v:"右側方面観",d:"2026/06/20"},
-    {v:"左側方面観",d:"2026/06/20"}
-  ];
+  var uidSeq=1;
+  function mk(dt){ return {uid:uidSeq++, dt:dt}; } // dt: "YYYY/MM/DD HH:MM" or null
   var patients={
-    "12345":{id:"12345",name:"山田 太郎",photos:views.slice()},
-    "10872":{id:"10872",name:"鈴木 一郎",photos:views.slice(0,3)},
-    "13044":{id:"13044",name:"田中 美咲",photos:views.slice(0,4)}
+    "12345":{id:"12345",name:"山田 太郎",photos:[
+      mk("2026/06/20 14:30"),mk("2026/06/20 14:31"),mk("2026/06/20 14:33"),
+      mk("2026/03/15 10:05"),mk("2026/03/15 10:07"),mk(null)
+    ]},
+    "10872":{id:"10872",name:"鈴木 一郎",photos:[ mk("2026/05/02 09:12"),mk("2026/05/02 09:13"),mk(null) ]},
+    "13044":{id:"13044",name:"",photos:[ mk("2026/06/18 16:40"),mk("2026/06/18 16:41") ]}
   };
-  var current=null, detIndex=0;
+  var current=null, detIndex=0, selMode=null, selected={};
 
   var screens=document.querySelectorAll('.screen[data-screen]');
   var flowSteps=document.querySelectorAll('#flowbar .step');
-
   function show(name){
     screens.forEach(function(s){ s.classList.toggle('show', s.dataset.screen===name); });
     flowSteps.forEach(function(st){ st.classList.toggle('active', st.dataset.go===name); });
   }
 
-  // フローバー / data-go ボタン
+  // data-go ハンドラ
   document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-go]');
-    if(!t) return;
+    var t=e.target.closest('[data-go]'); if(!t) return;
     var dst=t.dataset.go;
-    if(dst==='register'){ openModal(); return; }
-    if(dst==='gallery'){ if(!current) openPatient('12345'); else show('gallery'); return; }
+    if(dst==='register'){ openModal('#overlay','regId'); return; }
+    if(dst==='gallery'){ exitSel(); if(!current) openPatient('12345'); else show('gallery'); return; }
     if(dst==='detail'){ if(!current) openPatient('12345'); openDetail(0); return; }
+    if(dst==='home'){ exitSel(); }
     show(dst);
   });
 
-  // 最近の患者リスト描画
-  function renderRecent(){
-    var html='';
-    Object.keys(patients).forEach(function(k){
-      var p=patients[k];
-      html+='<div class="pt-row" data-open="'+p.id+'">'
-        +'<span class="num">No.'+p.id+'</span>'
-        +'<span class="nm">'+p.name+'</span>'
-        +'<span class="cnt">写真 '+p.photos.length+'枚</span>'
-        +'<span class="go">›</span></div>';
-    });
-    document.getElementById('recentList').innerHTML=html;
-    document.getElementById('ptCount').textContent=Object.keys(patients).length;
-  }
+  // ---- ログイン ----
+  document.getElementById('loginBtn').addEventListener('click',function(){ show('home'); });
+  document.getElementById('loginPw').addEventListener('keydown',function(e){ if(e.key==='Enter') show('home'); });
+  document.getElementById('licenseLink').addEventListener('click',function(){ show('home'); });
 
-  document.getElementById('recentList').addEventListener('click',function(e){
-    var r=e.target.closest('[data-open]'); if(!r) return;
-    openPatient(r.dataset.open);
-  });
-
-  // 検索
+  // ---- 検索 ----
   function doSearch(){
     var q=document.getElementById('searchInput').value.trim();
     if(patients[q]){ openPatient(q); }
@@ -574,21 +554,34 @@
   document.getElementById('searchGo').addEventListener('click',doSearch);
   document.getElementById('searchInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); });
 
-  // 患者を開く
+  // ---- 患者を開く ----
   function openPatient(id){
-    current=patients[id];
+    current=patients[id]; exitSel();
     document.getElementById('galId').textContent='No.'+current.id;
-    document.getElementById('galName').textContent=current.name;
-    renderGallery();
-    show('gallery');
+    document.getElementById('galName').textContent=current.name||'（氏名未登録）';
+    renderGallery(); show('gallery');
   }
 
-  function photoMarkup(label){
-    return '<div class="photo"><span class="vlabel">'+label+'</span></div>';
+  // 日付でグループ化（新しい順／未設定は最上部）
+  function buildGroups(){
+    var map={}; // dateKey -> array
+    current.photos.forEach(function(p){
+      var key=p.dt?p.dt.split(' ')[0]:'__none__';
+      (map[key]=map[key]||[]).push(p);
+    });
+    var keys=Object.keys(map).filter(function(k){return k!=='__none__';});
+    keys.sort(function(a,b){ return a<b?1:(a>b?-1:0); }); // 降順
+    var groups=[];
+    if(map['__none__']) groups.push({key:'__none__',date:null,photos:map['__none__']});
+    keys.forEach(function(k){ groups.push({key:k,date:k,photos:map[k]}); });
+    return groups;
   }
+
+  function timeOf(dt){ return dt?dt.split(' ')[1]:''; }
 
   function renderGallery(){
     var body=document.getElementById('galleryBody');
+    body.classList.toggle('selmode',!!selMode);
     if(current.photos.length===0){
       body.innerHTML='<div class="empty">'
         +'<div class="icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6"/><circle cx="11.5" cy="13" r="3" stroke="currentColor" stroke-width="1.6"/></svg></div>'
@@ -597,70 +590,166 @@
         +'<button class="btn-primary" id="emptyImport"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>画像を取り込む</button>'
         +'</div>';
       document.getElementById('emptyImport').addEventListener('click',importPhotos);
-      return;
+      renderToolbar(); return;
     }
-    var html='<p class="gal-hint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5M12 8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>サムネイルを1タップで拡大表示します</p><div class="grid">';
-    current.photos.forEach(function(p,i){
-      html+='<div class="thumb" data-i="'+i+'">'+photoMarkup(p.v)
-        +'<div class="cap"><span>'+p.v+'</span><span class="d">'+p.d+'</span></div></div>';
+    var groups=buildGroups(), html='', display=[];
+    groups.forEach(function(g){
+      var undated=(g.key==='__none__');
+      html+='<div class="date-group'+(undated?' undated':'')+'">';
+      html+='<div class="date-head"><span class="bar"></span>'
+        +(undated?'日時未設定':g.date)+'<span class="cnt">'+g.photos.length+'枚</span></div>';
+      if(undated){
+        html+='<div class="undated-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex:none;margin-top:1px"><path d="M12 3 2 20h20L12 3Z" stroke="#C7791B" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 10v4M12 17h.01" stroke="#C7791B" stroke-width="1.8" stroke-linecap="round"/></svg>'
+          +'メタデータ（撮影日時）が無い画像です。「撮影日時変更」で日付を設定してください。</div>';
+      }
+      html+='<div class="grid">';
+      g.photos.forEach(function(p){
+        display.push(p);
+        var isSel=selected[p.uid]?' sel':'';
+        html+='<div class="thumb'+isSel+'" data-uid="'+p.uid+'">'
+          +'<div class="photo"><div class="check"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>'
+          +'<div class="cap">'+(p.dt?'<span class="t">'+timeOf(p.dt)+'</span>':'<span class="nodate">日時未設定</span>')+'</div>'
+          +'</div>';
+      });
+      html+='</div></div>';
     });
+    // 取込タイル（最後）
     html+='<div class="add-tile" id="addTile"><div class="plus">＋</div>画像を取り込む</div>';
-    html+='</div>';
     body.innerHTML=html;
+    current._display=display;
+
     body.querySelectorAll('.thumb').forEach(function(th){
-      th.addEventListener('click',function(){ openDetail(+th.dataset.i); });
+      th.addEventListener('click',function(){
+        var uid=+th.dataset.uid;
+        if(selMode){ toggleSel(uid,th); }
+        else { openDetail(display.indexOf(findByUid(uid))); }
+      });
     });
-    document.getElementById('addTile').addEventListener('click',importPhotos);
+    var add=document.getElementById('addTile');
+    if(add) add.addEventListener('click',importPhotos);
+    renderToolbar();
   }
 
+  function findByUid(uid){ for(var i=0;i<current.photos.length;i++){ if(current.photos[i].uid===uid) return current.photos[i]; } return null; }
+
+  function renderToolbar(){
+    var tb=document.getElementById('galToolbar');
+    if(!selMode){
+      tb.innerHTML='<span class="tb-info"><span class="dot"></span>この患者の画像はこのPC内に保存されています</span>'
+        +'<span class="spacer"></span>'
+        +'<button class="tool-btn" data-tool="date"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>撮影日時変更</button>'
+        +'<button class="tool-btn" data-tool="link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M15 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>紐付け変更</button>';
+      tb.querySelectorAll('[data-tool]').forEach(function(b){ b.addEventListener('click',function(){ enterSel(b.dataset.tool); }); });
+    } else {
+      var n=selCount();
+      var label=(selMode==='date')?'撮影日時変更モード':'紐付け変更モード';
+      var hint=(selMode==='date')?'変更する画像にチェック':'移動する画像にチェック';
+      tb.innerHTML='<span class="mode-pill">'+label+'</span>'
+        +'<span class="tb-info">'+hint+' — <b>'+n+'枚</b>選択中</span>'
+        +'<span class="spacer"></span>'
+        +'<button class="btn-ghost btn-sm" id="selCancel">キャンセル</button>'
+        +'<button class="btn-primary btn-sm" id="selNext"'+(n===0?' disabled':'')+'>次へ'+(n>0?'（'+n+'）':'')+'</button>';
+      document.getElementById('selCancel').addEventListener('click',exitSel);
+      document.getElementById('selNext').addEventListener('click',goNext);
+    }
+  }
+
+  function selCount(){ return Object.keys(selected).length; }
+  function enterSel(mode){ selMode=mode; selected={}; renderGallery(); }
+  function exitSel(){ if(selMode||selCount()){ selMode=null; selected={}; if(current) renderGallery(); } }
+  function toggleSel(uid,th){
+    if(selected[uid]){ delete selected[uid]; th.classList.remove('sel'); }
+    else { selected[uid]=true; th.classList.add('sel'); }
+    renderToolbar();
+  }
+  function goNext(){
+    if(selCount()===0) return;
+    if(selMode==='date'){
+      document.getElementById('dateSelCount').textContent=selCount()+'枚を選択中';
+      // 既存日時があれば初期値に
+      var first=null; for(var u in selected){ var p=findByUid(+u); if(p&&p.dt){ first=p.dt; break; } }
+      document.getElementById('dateInput').value=first?first.replace(' ','T').replace(/\//g,'-'):'';
+      openModal('#dateOverlay','dateInput');
+    } else {
+      document.getElementById('linkSelCount').textContent=selCount()+'枚を選択中';
+      document.getElementById('linkInput').value='';
+      openModal('#linkOverlay','linkInput');
+    }
+  }
+
+  // ---- 取込（デモ：Exifあり2枚＋メタなし1枚を追加） ----
   function importPhotos(){
-    // デモ：標準5枚法を取り込んだ体で追加
-    current.photos=views.slice();
+    current.photos.push(mk('2026/06/29 11:00'),mk('2026/06/29 11:02'),mk(null));
     renderGallery();
   }
   document.getElementById('importBtn').addEventListener('click',importPhotos);
 
-  // 詳細
+  // ---- 詳細 ----
   function openDetail(i){
-    if(!current||current.photos.length===0) return;
-    detIndex=i; renderDetail(); show('detail');
+    if(!current||!current._display||current._display.length===0) return;
+    detIndex=i<0?0:i; renderDetail(); show('detail');
   }
   function renderDetail(){
-    var p=current.photos[detIndex];
+    var list=current._display, p=list[detIndex];
     document.getElementById('detId').textContent='No.'+current.id;
-    document.getElementById('detName').textContent=current.name;
-    document.getElementById('detView').textContent=p.v;
-    document.getElementById('detDate').textContent=p.d;
-    document.getElementById('detIdx').textContent=(detIndex+1)+' / '+current.photos.length;
+    document.getElementById('detName').textContent=current.name||'（氏名未登録）';
+    var v=document.getElementById('detView');
+    v.textContent=p.dt?p.dt:'日時未設定';
+    v.classList.toggle('nodate',!p.dt);
+    document.getElementById('detIdx').textContent=(detIndex+1)+' / '+list.length;
   }
-  document.getElementById('detPrev').addEventListener('click',function(){
-    detIndex=(detIndex-1+current.photos.length)%current.photos.length; renderDetail();
-  });
-  document.getElementById('detNext').addEventListener('click',function(){
-    detIndex=(detIndex+1)%current.photos.length; renderDetail();
+  document.getElementById('detPrev').addEventListener('click',function(){ var n=current._display.length; detIndex=(detIndex-1+n)%n; renderDetail(); });
+  document.getElementById('detNext').addEventListener('click',function(){ var n=current._display.length; detIndex=(detIndex+1)%n; renderDetail(); });
+
+  // ---- モーダル共通 ----
+  function openModal(sel,focusId){
+    var ov=document.querySelector(sel); ov.classList.add('show');
+    if(focusId) setTimeout(function(){ var el=document.getElementById(focusId); if(el) el.focus(); },50);
+  }
+  function closeModal(sel){ document.querySelector(sel).classList.remove('show'); }
+  document.querySelectorAll('.overlay').forEach(function(ov){
+    ov.addEventListener('click',function(e){ if(e.target===ov) ov.classList.remove('show'); });
   });
 
-  // モーダル
-  var overlay=document.getElementById('overlay');
-  function openModal(){
-    document.getElementById('regId').value='';
-    document.getElementById('regName').value='';
-    overlay.classList.add('show');
-    setTimeout(function(){ document.getElementById('regId').focus(); },50);
-  }
-  function closeModal(){ overlay.classList.remove('show'); }
-  document.getElementById('regCancel').addEventListener('click',closeModal);
-  overlay.addEventListener('click',function(e){ if(e.target===overlay) closeModal(); });
+  // 新規登録（氏名 任意）
+  document.getElementById('regCancel').addEventListener('click',function(){ closeModal('#overlay'); });
   document.getElementById('regSave').addEventListener('click',function(){
     var id=document.getElementById('regId').value.trim();
     var nm=document.getElementById('regName').value.trim();
-    if(!id||!nm){ alert('カルテ番号と氏名を入力してください。'); return; }
+    if(!id){ alert('カルテ番号を入力してください。'); return; }
+    if(patients[id]){ alert('カルテ番号 '+id+' は既に登録済みです。'); return; }
     patients[id]={id:id,name:nm,photos:[]};
-    renderRecent();
-    closeModal();
-    openPatient(id); // 登録直後は空の画像一覧へ
+    closeModal('#overlay'); openPatient(id);
   });
 
-  renderRecent();
+  // 撮影日時変更：実行
+  document.getElementById('dateCancel').addEventListener('click',function(){ closeModal('#dateOverlay'); });
+  document.getElementById('dateExec').addEventListener('click',function(){
+    var v=document.getElementById('dateInput').value; // 2026-06-20T14:30
+    if(!v){ alert('日時を指定してください。'); return; }
+    var fmt=v.replace('T',' ').replace(/-/g,'/').slice(0,16);
+    for(var u in selected){ var p=findByUid(+u); if(p) p.dt=fmt; }
+    closeModal('#dateOverlay'); exitSel();
+  });
+
+  // 紐付け変更：実行
+  document.getElementById('linkCancel').addEventListener('click',function(){ closeModal('#linkOverlay'); });
+  document.getElementById('linkExec').addEventListener('click',function(){
+    var to=document.getElementById('linkInput').value.trim();
+    if(!to){ alert('移動先のカルテ番号を入力してください。'); return; }
+    if(to===current.id){ alert('同じカルテ番号です。別の番号を指定してください。'); return; }
+    if(!patients[to]){
+      if(!confirm('カルテ番号 '+to+' は未登録です。新規作成して移動しますか？')) return;
+      patients[to]={id:to,name:'',photos:[]};
+    }
+    var moved=0, keep=[];
+    current.photos.forEach(function(p){
+      if(selected[p.uid]){ patients[to].photos.push(p); moved++; }
+      else keep.push(p);
+    });
+    current.photos=keep;
+    closeModal('#linkOverlay'); exitSel();
+    alert(moved+'枚をカルテ番号 '+to+' へ移動しました。');
+  });
 })();
 </script>
