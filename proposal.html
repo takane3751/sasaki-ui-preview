@@ -167,6 +167,9 @@
   .hgrp ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
   .hgrp li{display:flex;gap:10px;font-size:13.8px;color:var(--ink-2);line-height:1.65}
   .hgrp li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--brand);flex:none;margin-top:8px}
+  .hgrp li > div{min-width:0}
+  .hgrp li .q-t{font-weight:700;color:var(--ink);display:block}
+  .hgrp li .q-d{display:block;color:var(--mut);font-size:12.8px;margin-top:3px;line-height:1.7}
 
   /* スケジュール */
   .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -336,8 +339,8 @@
     <div class="hgrp">
       <h3><span class="t">D</span>製品仕様の要否</h3>
       <ul>
-        <li>レセコン連携：初版はシンプルさと価格を優先し <b>連携なし</b> で考えていますが、将来的にササキ様のレセコンとの連携が必要になりそうでしょうか。（既存の連携の仕組みに合わせる形での実装も検討できます）</li>
-        <li>配布方法：<b>ライセンスコード</b>でのご提供を想定しています。商品として <b>物理的なカード式での配布</b> が必要か、<b>デジタル発行（メール等）</b> でよいか——ササキ様の商品取り扱いルールに合わせたく、お考えを伺えればと思います。</li>
+        <li><div><span class="q-t">レセコン連携は必要になりそうですか？</span><span class="q-d">初版はシンプルさと価格を優先し「連携なし」で考えています。将来的にササキ様のレセコンとの連携が必要になりそうか、お聞かせください。（既存の連携の仕組みに合わせた実装も検討できます）</span></div></li>
+        <li><div><span class="q-t">配布は「物理カード式」「デジタル発行」どちらが良いですか？</span><span class="q-d">ライセンスコードでのご提供を想定しています。商品として物理的なカード式の配布が必要か、デジタル発行（メール等）でよいか、ササキ様の商品取り扱いルールに合わせたく存じます。</span></div></li>
       </ul>
     </div>
     <div class="hgrp">
