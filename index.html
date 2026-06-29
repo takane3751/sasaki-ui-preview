@@ -1,0 +1,666 @@
+<title>画像カルテ — UI設計プロトタイプ</title>
+<style>
+  :root{
+    --ground:#EEF2F4;
+    --surface:#FFFFFF;
+    --surface-2:#F6F9FA;
+    --teal:#127C86;
+    --teal-dark:#0E646C;
+    --teal-soft:#E3F0F1;
+    --ink:#1C2B31;
+    --ink-2:#3E4F55;
+    --mut:#6E7E83;
+    --line:#D9E2E5;
+    --line-2:#E8EEF0;
+    --ok:#2E9E6B;
+    --ok-soft:#E5F4EC;
+    --shadow:0 24px 60px -24px rgba(20,50,55,.45);
+    --r:14px;
+    --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Meiryo",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--font);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #DDE8EA 0%, transparent 60%),
+      var(--ground);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+    padding:28px 20px 64px;
+    min-height:100vh;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+
+  /* ---- プロトタイプ説明バー ---- */
+  .proto-head{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    margin:4px 4px 18px;
+  }
+  .proto-head .badge{
+    font-size:11px;letter-spacing:.14em;font-weight:700;color:var(--teal);
+    background:var(--teal-soft);padding:5px 11px;border-radius:999px;
+    border:1px solid #CDE5E6;white-space:nowrap;
+  }
+  .proto-head h1{font-size:21px;margin:0;letter-spacing:.01em}
+  .proto-head .sub{font-size:13px;color:var(--mut);margin:0}
+
+  .flowbar{
+    display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    margin:0 4px 20px;font-size:12.5px;color:var(--mut);
+  }
+  .flowbar .step{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:6px 12px;border-radius:999px;background:var(--surface);
+    border:1px solid var(--line);transition:.18s;cursor:pointer;color:var(--ink-2);
+    font-weight:600;
+  }
+  .flowbar .step .n{
+    width:18px;height:18px;border-radius:50%;background:var(--line-2);
+    display:grid;place-items:center;font-size:11px;color:var(--mut);font-weight:700;
+  }
+  .flowbar .step.active{background:var(--teal);border-color:var(--teal);color:#fff}
+  .flowbar .step.active .n{background:rgba(255,255,255,.25);color:#fff}
+  .flowbar .arr{color:var(--line);font-size:14px}
+
+  /* ---- アプリウィンドウ ---- */
+  .window{
+    background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);
+    overflow:hidden;border:1px solid var(--line);
+  }
+  .titlebar{
+    height:42px;display:flex;align-items:center;gap:10px;
+    padding:0 14px;background:linear-gradient(#FBFDFD,#EEF3F4);
+    border-bottom:1px solid var(--line);
+  }
+  .titlebar .app-ico{
+    width:22px;height:22px;border-radius:6px;flex:none;
+    background:linear-gradient(135deg,var(--teal),#2BA7B0);
+    display:grid;place-items:center;color:#fff;
+  }
+  .titlebar .app-name{font-size:13px;font-weight:700;letter-spacing:.02em}
+  .titlebar .app-ver{font-size:11px;color:var(--mut)}
+  .titlebar .winctl{margin-left:auto;display:flex;gap:0}
+  .titlebar .winctl button{
+    width:40px;height:42px;border:0;background:transparent;color:var(--mut);
+    font-size:13px;cursor:default;display:grid;place-items:center;
+  }
+  .titlebar .winctl button:hover{background:rgba(0,0,0,.05)}
+  .titlebar .winctl button.cls:hover{background:#E5484D;color:#fff}
+
+  .stage{position:relative;height:620px;background:var(--surface)}
+  .screen{
+    position:absolute;inset:0;display:none;flex-direction:column;
+    animation:fade .22s ease;
+  }
+  .screen.show{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.screen{animation:none}}
+
+  /* ---- 共通：画面内ヘッダー ---- */
+  .topbar{
+    display:flex;align-items:center;gap:14px;padding:16px 26px;
+    border-bottom:1px solid var(--line-2);background:var(--surface-2);
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);
+    background:#fff;border-radius:10px;padding:9px 15px;font-size:14px;font-weight:600;
+    color:var(--ink-2);cursor:pointer;transition:.15s;font-family:inherit;
+  }
+  .back:hover{border-color:var(--teal);color:var(--teal)}
+  .pt-id{
+    font-variant-numeric:tabular-nums;font-weight:800;font-size:17px;letter-spacing:.02em;
+  }
+  .pt-name{font-size:17px;font-weight:700}
+  .pt-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .chip{
+    font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;
+    background:var(--teal-soft);color:var(--teal-dark);
+  }
+  .chip-ok{background:var(--ok-soft);color:var(--ok);display:inline-flex;gap:5px;align-items:center}
+
+  .btn-primary{
+    border:0;background:var(--teal);color:#fff;border-radius:11px;
+    padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;
+    font-family:inherit;transition:.15s;box-shadow:0 6px 16px -8px rgba(18,124,134,.8);
+    display:inline-flex;align-items:center;gap:9px;
+  }
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-primary:active{transform:translateY(1px)}
+  .btn-ghost{
+    border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:11px;
+    padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;
+  }
+  .btn-ghost:hover{border-color:var(--mut)}
+
+  /* ---- 1. 検索画面 ---- */
+  .home{justify-content:flex-start}
+  .home-hero{
+    padding:46px 26px 26px;text-align:center;
+  }
+  .home-hero h2{font-size:24px;margin:0 0 6px;letter-spacing:.02em}
+  .home-hero p{margin:0;color:var(--mut);font-size:14px}
+  .search-row{
+    display:flex;gap:12px;max-width:560px;margin:26px auto 0;
+  }
+  .search-input{
+    flex:1;display:flex;align-items:center;gap:12px;background:#fff;
+    border:2px solid var(--line);border-radius:14px;padding:0 18px;height:62px;transition:.15s;
+  }
+  .search-input:focus-within{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+  .search-input svg{flex:none;color:var(--mut)}
+  .search-input input{
+    border:0;outline:0;font-size:20px;font-family:inherit;width:100%;
+    font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--ink);background:transparent;
+  }
+  .search-input input::placeholder{color:#A9B6BA;letter-spacing:0}
+  .search-go{
+    border:0;background:var(--teal);color:#fff;border-radius:14px;padding:0 28px;height:62px;
+    font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;flex:none;transition:.15s;
+  }
+  .search-go:hover{background:var(--teal-dark)}
+  .or-new{margin:22px auto 0;text-align:center}
+  .or-new .or{font-size:13px;color:var(--mut);margin-bottom:12px;display:flex;align-items:center;gap:14px;max-width:560px;margin-inline:auto}
+  .or-new .or::before,.or-new .or::after{content:"";flex:1;height:1px;background:var(--line)}
+  .btn-new{
+    border:2px dashed var(--line);background:var(--surface-2);color:var(--teal-dark);
+    border-radius:14px;padding:16px 28px;font-size:16px;font-weight:700;cursor:pointer;
+    font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:10px;
+  }
+  .btn-new:hover{border-color:var(--teal);background:var(--teal-soft)}
+
+  .recent{
+    margin-top:30px;border-top:1px solid var(--line-2);flex:1;overflow:auto;
+  }
+  .recent h3{
+    font-size:12px;letter-spacing:.12em;color:var(--mut);font-weight:700;
+    margin:0;padding:18px 26px 10px;
+  }
+  .pt-row{
+    display:flex;align-items:center;gap:16px;padding:14px 26px;cursor:pointer;
+    border-bottom:1px solid var(--line-2);transition:.13s;
+  }
+  .pt-row:hover{background:var(--surface-2)}
+  .pt-row .num{
+    font-variant-numeric:tabular-nums;font-weight:800;font-size:15px;
+    min-width:84px;color:var(--teal-dark);
+  }
+  .pt-row .nm{font-weight:700;font-size:15px;flex:1}
+  .pt-row .cnt{font-size:13px;color:var(--mut)}
+  .pt-row .go{color:var(--line);font-size:18px}
+  .pt-row:hover .go{color:var(--teal)}
+
+  .statusbar{
+    border-top:1px solid var(--line-2);padding:10px 26px;font-size:12px;color:var(--mut);
+    display:flex;align-items:center;gap:8px;background:var(--surface-2);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+
+  /* ---- 2. 新規登録モーダル ---- */
+  .overlay{
+    position:absolute;inset:0;background:rgba(18,40,45,.42);
+    display:none;align-items:center;justify-content:center;z-index:20;
+    backdrop-filter:blur(2px);
+  }
+  .overlay.show{display:flex;animation:fade .18s ease}
+  .modal{
+    background:#fff;border-radius:18px;width:440px;max-width:92%;
+    box-shadow:0 30px 70px -20px rgba(10,30,35,.6);overflow:hidden;
+  }
+  .modal h3{
+    margin:0;padding:22px 26px 4px;font-size:19px;
+  }
+  .modal .modal-sub{padding:0 26px;color:var(--mut);font-size:13px;margin:0}
+  .field{padding:16px 26px 0}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:7px}
+  .field label .req{color:#E5484D;font-size:12px;margin-left:4px}
+  .field input{
+    width:100%;height:52px;border:2px solid var(--line);border-radius:12px;
+    padding:0 16px;font-size:18px;font-family:inherit;outline:0;transition:.15s;
+    font-variant-numeric:tabular-nums;color:var(--ink);
+  }
+  .field input::placeholder{font-variant-numeric:normal;color:#B4C0C4}
+  .field input:focus{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+  .modal-actions{
+    display:flex;gap:12px;justify-content:flex-end;padding:24px 26px 26px;margin-top:8px;
+  }
+
+  /* ---- 3. 画像一覧 ---- */
+  .gallery-body{flex:1;overflow:auto;padding:24px 26px}
+  .gal-hint{
+    font-size:13px;color:var(--mut);margin:0 0 16px;display:flex;align-items:center;gap:8px;
+  }
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;
+  }
+  .thumb{
+    border:1px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;
+    background:#fff;transition:.16s;
+  }
+  .thumb:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 14px 26px -16px rgba(18,124,134,.6)}
+  .photo{
+    height:150px;position:relative;
+    background:
+      radial-gradient(60px 40px at 50% 78%, rgba(0,0,0,.18), transparent 70%),
+      linear-gradient(180deg,#C97F77 0%,#D89189 32%,#E9D9C9 33%,#F4EBDF 60%,#E7CFC0 61%,#CE867E 100%);
+  }
+  .photo::after{
+    content:"";position:absolute;left:14%;right:14%;top:38%;height:24%;
+    border-radius:6px;
+    background:repeating-linear-gradient(90deg,#FBF6EE 0 11px,#E7D7C6 11px 13px);
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.12);
+  }
+  .photo .vlabel{
+    position:absolute;left:10px;bottom:9px;z-index:2;
+    background:rgba(20,40,45,.62);color:#fff;font-size:11px;font-weight:700;
+    padding:4px 9px;border-radius:7px;letter-spacing:.02em;
+  }
+  .thumb .cap{
+    padding:10px 13px;display:flex;justify-content:space-between;align-items:center;
+    font-size:12.5px;color:var(--mut);
+  }
+  .thumb .cap .d{font-variant-numeric:tabular-nums}
+  .add-tile{
+    border:2px dashed var(--line);border-radius:13px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:10px;color:var(--teal-dark);cursor:pointer;
+    min-height:212px;background:var(--surface-2);transition:.15s;font-weight:700;font-size:14px;
+  }
+  .add-tile:hover{border-color:var(--teal);background:var(--teal-soft)}
+  .add-tile .plus{
+    width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid var(--line);
+    display:grid;place-items:center;font-size:24px;color:var(--teal);
+  }
+
+  /* 空状態（新規登録直後） */
+  .empty{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:18px;text-align:center;padding:40px;
+  }
+  .empty .icon{
+    width:84px;height:84px;border-radius:24px;background:var(--teal-soft);
+    display:grid;place-items:center;color:var(--teal);
+  }
+  .empty h3{margin:0;font-size:19px}
+  .empty p{margin:0;color:var(--mut);font-size:14px;max-width:360px}
+
+  /* ---- 4. 画像詳細 ---- */
+  .detail-body{flex:1;display:flex;flex-direction:column;background:#13262B}
+  .detail-stage{
+    flex:1;display:flex;align-items:center;justify-content:center;padding:30px;position:relative;
+  }
+  .big-photo{
+    width:min(520px,80%);aspect-ratio:4/3;border-radius:14px;position:relative;overflow:hidden;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
+    background:
+      radial-gradient(150px 100px at 50% 80%, rgba(0,0,0,.22), transparent 70%),
+      linear-gradient(180deg,#C97F77 0%,#D89189 32%,#E9D9C9 33%,#F4EBDF 60%,#E7CFC0 61%,#CE867E 100%);
+  }
+  .big-photo::after{
+    content:"";position:absolute;left:16%;right:16%;top:40%;height:22%;border-radius:10px;
+    background:repeating-linear-gradient(90deg,#FBF6EE 0 22px,#E7D7C6 22px 26px);
+    box-shadow:inset 0 3px 8px rgba(0,0,0,.14);
+  }
+  .detail-bar{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:14px 26px;background:#0E1F23;color:#CFE0E2;font-size:13.5px;
+  }
+  .detail-bar .vname{font-weight:700;color:#fff;font-size:15px}
+  .detail-bar .meta{display:flex;gap:18px;color:#8FA6AA;font-variant-numeric:tabular-nums}
+  .nav-btn{
+    position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+    border:0;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer;
+    display:grid;place-items:center;transition:.15s;
+  }
+  .nav-btn:hover{background:rgba(255,255,255,.25)}
+  .nav-btn.prev{left:24px}.nav-btn.next{right:24px}
+
+  /* ---- 凡例（下） ---- */
+  .legend{
+    margin:26px 4px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;
+  }
+  .legend .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+  }
+  .legend .card .k{
+    font-size:11px;letter-spacing:.1em;color:var(--teal);font-weight:700;margin-bottom:6px;
+  }
+  .legend .card h4{margin:0 0 5px;font-size:14.5px}
+  .legend .card p{margin:0;font-size:12.5px;color:var(--mut);line-height:1.55}
+
+  .foot-note{
+    margin:22px 4px 0;font-size:12px;color:var(--mut);line-height:1.7;
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+  .foot-note b{color:var(--ink-2)}
+</style>
+
+<div class="wrap">
+
+  <div class="proto-head">
+    <span class="badge">UI設計プロトタイプ</span>
+    <h1>画像カルテ <span style="font-weight:400;color:var(--mut);font-size:15px">— 口腔内写真 静止画管理アプリ（仮称）</span></h1>
+  </div>
+  <p class="proto-head sub" style="margin:-10px 4px 18px">
+    ササキ向け／保険算定対策。下のステップまたは画面内のボタンを<b>クリックすると実際に操作</b>できます。「点数が取れるためだけ」の超ミニマル構成です。
+  </p>
+
+  <!-- フロー・ナビゲーター -->
+  <div class="flowbar" id="flowbar">
+    <span class="step active" data-go="home"><span class="n">1</span>検索</span>
+    <span class="arr">→</span>
+    <span class="step" data-go="register"><span class="n">2</span>新規登録</span>
+    <span class="arr">→</span>
+    <span class="step" data-go="gallery"><span class="n">3</span>画像一覧</span>
+    <span class="arr">→</span>
+    <span class="step" data-go="detail"><span class="n">4</span>画像詳細</span>
+  </div>
+
+  <!-- アプリウィンドウ -->
+  <div class="window">
+    <div class="titlebar">
+      <div class="app-ico">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="#fff" stroke-width="1.7"/><circle cx="11.5" cy="13" r="2.6" stroke="#fff" stroke-width="1.7"/></svg>
+      </div>
+      <span class="app-name">画像カルテ</span>
+      <span class="app-ver">v1.0</span>
+      <div class="winctl">
+        <button aria-label="最小化">—</button>
+        <button aria-label="最大化">▢</button>
+        <button class="cls" aria-label="閉じる">✕</button>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+
+      <!-- 1. 検索画面 -->
+      <section class="screen show home" data-screen="home">
+        <div class="home-hero">
+          <h2>患者を検索</h2>
+          <p>カルテ番号を入力して、その患者の口腔内写真を表示します</p>
+          <div class="search-row">
+            <label class="search-input">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <input id="searchInput" inputmode="numeric" placeholder="カルテ番号を入力" autocomplete="off">
+            </label>
+            <button class="search-go" id="searchGo">検索</button>
+          </div>
+          <div class="or-new">
+            <div class="or">または</div>
+            <button class="btn-new" data-go="register">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              新規患者を登録
+            </button>
+          </div>
+        </div>
+
+        <div class="recent">
+          <h3>最近登録した患者</h3>
+          <div id="recentList"></div>
+        </div>
+
+        <div class="statusbar">
+          <span class="dot"></span>
+          ローカル保存（このPC内）・<span id="ptCount">3</span>名の患者を管理中
+        </div>
+      </section>
+
+      <!-- 3. 画像一覧 -->
+      <section class="screen" data-screen="gallery">
+        <div class="topbar">
+          <button class="back" data-go="home">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            検索へ戻る
+          </button>
+          <div class="pt-meta">
+            <span class="pt-id" id="galId">No.12345</span>
+            <span class="pt-name" id="galName">山田 太郎</span>
+            <span class="chip-ok chip">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              保険算定 管理OK
+            </span>
+          </div>
+          <button class="btn-primary" id="importBtn" style="margin-left:auto">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            画像を取り込む
+          </button>
+        </div>
+        <div class="gallery-body" id="galleryBody"><!-- JS --></div>
+        <div class="statusbar"><span class="dot"></span>この患者の画像はこのPC内に保存されています</div>
+      </section>
+
+      <!-- 4. 画像詳細 -->
+      <section class="screen" data-screen="detail">
+        <div class="topbar" style="background:#0E1F23;border-bottom:0">
+          <button class="back" data-go="gallery" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            一覧へ戻る
+          </button>
+          <span style="color:#fff;font-weight:700;font-variant-numeric:tabular-nums" id="detId">No.12345</span>
+          <span style="color:#8FA6AA" id="detName">山田 太郎</span>
+        </div>
+        <div class="detail-body">
+          <div class="detail-stage">
+            <button class="nav-btn prev" id="detPrev">‹</button>
+            <div class="big-photo"></div>
+            <button class="nav-btn next" id="detNext">›</button>
+          </div>
+          <div class="detail-bar">
+            <span class="vname" id="detView">正面観</span>
+            <span class="meta"><span>取込日：<span id="detDate">2026/06/20</span></span><span id="detIdx">1 / 5</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 新規登録（オーバーレイ） -->
+      <div class="overlay" id="overlay">
+        <div class="modal">
+          <h3>新規患者を登録</h3>
+          <p class="modal-sub">カルテ番号と氏名を入力してください</p>
+          <div class="field">
+            <label>カルテ番号<span class="req">必須</span></label>
+            <input id="regId" inputmode="numeric" placeholder="例）12346" autocomplete="off">
+          </div>
+          <div class="field">
+            <label>氏名<span class="req">必須</span></label>
+            <input id="regName" placeholder="例）佐藤 花子" autocomplete="off">
+          </div>
+          <div class="modal-actions">
+            <button class="btn-ghost" id="regCancel">キャンセル</button>
+            <button class="btn-primary" id="regSave">登録する</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 凡例 -->
+  <div class="legend">
+    <div class="card">
+      <div class="k">SCREEN 1</div>
+      <h4>検索画面</h4>
+      <p>カルテ番号で検索、または「新規患者を登録」。最近の患者から直接開くこともできます。</p>
+    </div>
+    <div class="card">
+      <div class="k">SCREEN 2</div>
+      <h4>新規登録</h4>
+      <p>入力はカルテ番号＋氏名のみ。登録するとそのまま画像取込へ進みます。</p>
+    </div>
+    <div class="card">
+      <div class="k">SCREEN 3</div>
+      <h4>画像一覧</h4>
+      <p>患者ごとのサムネイル一覧。「画像を取り込む」でアップロード。1タップで詳細へ。</p>
+    </div>
+    <div class="card">
+      <div class="k">SCREEN 4</div>
+      <h4>画像詳細</h4>
+      <p>写真を拡大表示。戻るボタンで一覧へ。これ以上の機能は意図的に持たせていません。</p>
+    </div>
+  </div>
+
+  <p class="foot-note">
+    <b>設計の割り切り</b>：保険算定で指摘された際に「ちゃんと管理しています」と提示できればよい、という用途に特化。<br>
+    <b>意図的に除外</b>：動画（picmoR競合回避）・タグ／自動振り分け・全体検索・比較機能・ロゴ／理念表示・患者提示用途。<br>
+    <b>技術前提</b>：Tauri＋React＋Rust／SQLite、Windowsデスクトップ、ローカル保存（クラウド不使用）、ネット接続時にアップデート配信。<br>
+    ＝ これは完成イメージ共有用のクリック可能なモックアップです（実データは入っていません）。
+  </p>
+
+</div>
+
+<script>
+(function(){
+  // サンプルデータ
+  var views=[
+    {v:"正面観",d:"2026/06/20"},
+    {v:"上顎咬合面",d:"2026/06/20"},
+    {v:"下顎咬合面",d:"2026/06/20"},
+    {v:"右側方面観",d:"2026/06/20"},
+    {v:"左側方面観",d:"2026/06/20"}
+  ];
+  var patients={
+    "12345":{id:"12345",name:"山田 太郎",photos:views.slice()},
+    "10872":{id:"10872",name:"鈴木 一郎",photos:views.slice(0,3)},
+    "13044":{id:"13044",name:"田中 美咲",photos:views.slice(0,4)}
+  };
+  var current=null, detIndex=0;
+
+  var screens=document.querySelectorAll('.screen[data-screen]');
+  var flowSteps=document.querySelectorAll('#flowbar .step');
+
+  function show(name){
+    screens.forEach(function(s){ s.classList.toggle('show', s.dataset.screen===name); });
+    flowSteps.forEach(function(st){ st.classList.toggle('active', st.dataset.go===name); });
+  }
+
+  // フローバー / data-go ボタン
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-go]');
+    if(!t) return;
+    var dst=t.dataset.go;
+    if(dst==='register'){ openModal(); return; }
+    if(dst==='gallery'){ if(!current) openPatient('12345'); else show('gallery'); return; }
+    if(dst==='detail'){ if(!current) openPatient('12345'); openDetail(0); return; }
+    show(dst);
+  });
+
+  // 最近の患者リスト描画
+  function renderRecent(){
+    var html='';
+    Object.keys(patients).forEach(function(k){
+      var p=patients[k];
+      html+='<div class="pt-row" data-open="'+p.id+'">'
+        +'<span class="num">No.'+p.id+'</span>'
+        +'<span class="nm">'+p.name+'</span>'
+        +'<span class="cnt">写真 '+p.photos.length+'枚</span>'
+        +'<span class="go">›</span></div>';
+    });
+    document.getElementById('recentList').innerHTML=html;
+    document.getElementById('ptCount').textContent=Object.keys(patients).length;
+  }
+
+  document.getElementById('recentList').addEventListener('click',function(e){
+    var r=e.target.closest('[data-open]'); if(!r) return;
+    openPatient(r.dataset.open);
+  });
+
+  // 検索
+  function doSearch(){
+    var q=document.getElementById('searchInput').value.trim();
+    if(patients[q]){ openPatient(q); }
+    else if(q===''){ document.getElementById('searchInput').focus(); }
+    else { alert('カルテ番号 '+q+' は未登録です。\n「新規患者を登録」から登録してください。'); }
+  }
+  document.getElementById('searchGo').addEventListener('click',doSearch);
+  document.getElementById('searchInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); });
+
+  // 患者を開く
+  function openPatient(id){
+    current=patients[id];
+    document.getElementById('galId').textContent='No.'+current.id;
+    document.getElementById('galName').textContent=current.name;
+    renderGallery();
+    show('gallery');
+  }
+
+  function photoMarkup(label){
+    return '<div class="photo"><span class="vlabel">'+label+'</span></div>';
+  }
+
+  function renderGallery(){
+    var body=document.getElementById('galleryBody');
+    if(current.photos.length===0){
+      body.innerHTML='<div class="empty">'
+        +'<div class="icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6"/><circle cx="11.5" cy="13" r="3" stroke="currentColor" stroke-width="1.6"/></svg></div>'
+        +'<h3>まだ写真がありません</h3>'
+        +'<p>「画像を取り込む」から、この患者の口腔内写真をアップロードしてください。</p>'
+        +'<button class="btn-primary" id="emptyImport"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>画像を取り込む</button>'
+        +'</div>';
+      document.getElementById('emptyImport').addEventListener('click',importPhotos);
+      return;
+    }
+    var html='<p class="gal-hint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5M12 8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>サムネイルを1タップで拡大表示します</p><div class="grid">';
+    current.photos.forEach(function(p,i){
+      html+='<div class="thumb" data-i="'+i+'">'+photoMarkup(p.v)
+        +'<div class="cap"><span>'+p.v+'</span><span class="d">'+p.d+'</span></div></div>';
+    });
+    html+='<div class="add-tile" id="addTile"><div class="plus">＋</div>画像を取り込む</div>';
+    html+='</div>';
+    body.innerHTML=html;
+    body.querySelectorAll('.thumb').forEach(function(th){
+      th.addEventListener('click',function(){ openDetail(+th.dataset.i); });
+    });
+    document.getElementById('addTile').addEventListener('click',importPhotos);
+  }
+
+  function importPhotos(){
+    // デモ：標準5枚法を取り込んだ体で追加
+    current.photos=views.slice();
+    renderGallery();
+  }
+  document.getElementById('importBtn').addEventListener('click',importPhotos);
+
+  // 詳細
+  function openDetail(i){
+    if(!current||current.photos.length===0) return;
+    detIndex=i; renderDetail(); show('detail');
+  }
+  function renderDetail(){
+    var p=current.photos[detIndex];
+    document.getElementById('detId').textContent='No.'+current.id;
+    document.getElementById('detName').textContent=current.name;
+    document.getElementById('detView').textContent=p.v;
+    document.getElementById('detDate').textContent=p.d;
+    document.getElementById('detIdx').textContent=(detIndex+1)+' / '+current.photos.length;
+  }
+  document.getElementById('detPrev').addEventListener('click',function(){
+    detIndex=(detIndex-1+current.photos.length)%current.photos.length; renderDetail();
+  });
+  document.getElementById('detNext').addEventListener('click',function(){
+    detIndex=(detIndex+1)%current.photos.length; renderDetail();
+  });
+
+  // モーダル
+  var overlay=document.getElementById('overlay');
+  function openModal(){
+    document.getElementById('regId').value='';
+    document.getElementById('regName').value='';
+    overlay.classList.add('show');
+    setTimeout(function(){ document.getElementById('regId').focus(); },50);
+  }
+  function closeModal(){ overlay.classList.remove('show'); }
+  document.getElementById('regCancel').addEventListener('click',closeModal);
+  overlay.addEventListener('click',function(e){ if(e.target===overlay) closeModal(); });
+  document.getElementById('regSave').addEventListener('click',function(){
+    var id=document.getElementById('regId').value.trim();
+    var nm=document.getElementById('regName').value.trim();
+    if(!id||!nm){ alert('カルテ番号と氏名を入力してください。'); return; }
+    patients[id]={id:id,name:nm,photos:[]};
+    renderRecent();
+    closeModal();
+    openPatient(id); // 登録直後は空の画像一覧へ
+  });
+
+  renderRecent();
+})();
+</script>
