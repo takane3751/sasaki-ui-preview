@@ -140,8 +140,17 @@
     width:372px;flex:none;border-right:1px solid var(--line-2);background:var(--surface);
     padding:36px 30px;display:flex;flex-direction:column;
   }
-  .home-left h2{font-size:22px;margin:0 0 4px;letter-spacing:.02em}
+  .home-left h2{font-size:22px;margin:0 0 16px;letter-spacing:.02em}
   .home-left .lead{margin:0 0 22px;color:var(--mut);font-size:13px}
+  /* 検索タブ */
+  .tabs{display:flex;gap:6px;margin:0 0 16px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:4px}
+  .tabs .tab{
+    flex:1;border:0;background:transparent;border-radius:9px;padding:11px 0;font-size:14px;font-weight:700;
+    color:var(--mut);cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  }
+  .tabs .tab:hover{color:var(--ink-2)}
+  .tabs .tab.active{background:#fff;color:var(--brand-dark);box-shadow:0 2px 6px -3px rgba(20,40,70,.3)}
+  .tabpane[hidden]{display:none}
   .search-input{
     display:flex;align-items:center;gap:11px;background:#fff;border:2px solid var(--line);
     border-radius:13px;padding:0 16px;height:60px;transition:.15s;
@@ -397,15 +406,39 @@
         <div class="home-split">
           <div class="home-left">
             <h2>患者を検索</h2>
-            <p class="lead">カルテ番号を入力して検索します</p>
-            <label class="search-input">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              <input id="searchInput" inputmode="numeric" placeholder="カルテ番号を入力" autocomplete="off">
-            </label>
-            <button class="search-go" id="searchGo">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/><path d="m20 20-3.2-3.2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-              検索
-            </button>
+            <div class="tabs" id="searchTabs">
+              <button class="tab active" data-tab="karte">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 10h4M7 14h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                カルテ番号
+              </button>
+              <button class="tab" data-tab="name">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-3.2 3-5.5 7-5.5s7 2.3 7 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                患者名
+              </button>
+            </div>
+
+            <div class="tabpane" id="pane-karte">
+              <label class="search-input">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <input id="searchInput" inputmode="numeric" placeholder="カルテ番号を入力" autocomplete="off">
+              </label>
+              <button class="search-go" data-search="karte">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/><path d="m20 20-3.2-3.2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                検索
+              </button>
+            </div>
+
+            <div class="tabpane" id="pane-name" hidden>
+              <label class="search-input">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="currentColor" stroke-width="2"/><path d="M5 20c0-3.4 3.1-6 7-6s7 2.6 7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <input id="searchNameInput" type="text" placeholder="患者名を入力（部分一致）" autocomplete="off">
+              </label>
+              <button class="search-go" data-search="name">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/><path d="m20 20-3.2-3.2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                検索
+              </button>
+            </div>
+
             <div class="or-sep">または</div>
             <button class="btn-new" data-go="register">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
@@ -421,7 +454,7 @@
             <div class="res-list" id="resList"></div>
           </div>
         </div>
-        <div class="statusbar"><span class="dot"></span>ローカル保存（このPC内）・カルテ番号の前方一致で候補を表示します</div>
+        <div class="statusbar"><span class="dot"></span>ローカル保存（このPC内）・カルテ番号（前方一致）／患者名（部分一致）で検索できます</div>
       </section>
 
       <!-- 3. 画像一覧 -->
@@ -553,7 +586,7 @@
   <!-- 凡例 -->
   <div class="legend">
     <div class="card"><div class="k">SCREEN 0</div><h4>ライセンス認証</h4><p>初回起動時のみ、購入時のライセンスコードで認証。物理カード式／デジタル発行に対応。</p></div>
-    <div class="card"><div class="k">SCREEN 1</div><h4>検索画面（起動時）</h4><p>左で番号検索・新規登録・保存先設定、右に候補一覧（氏名・総枚数・最終撮影日時）。前方一致で複数候補が出たら選べます。</p></div>
+    <div class="card"><div class="k">SCREEN 1</div><h4>検索画面（起動時）</h4><p>左は「カルテ番号／患者名」タブで検索＋新規登録・保存先設定。右に候補一覧（氏名・総枚数・最終撮影日時）。複数候補から選べます。</p></div>
     <div class="card"><div class="k">SCREEN 3</div><h4>画像一覧（画像あり）</h4><p>撮影日時でグループ化し新しい順に表示。「撮影日時変更」「紐付け変更」で後から修正できます。</p></div>
     <div class="card"><div class="k">SCREEN 3'</div><h4>画像一覧（画像なし）</h4><p>0枚のときは案内のみ表示。取り込みは右上の「画像を取り込む」ボタンから行います。</p></div>
     <div class="card"><div class="k">SCREEN 4</div><h4>画像詳細</h4><p>写真を拡大表示。戻るボタンで一覧へ。</p></div>
@@ -623,17 +656,22 @@
   function placeholderRight(){
     resHead.textContent='検索結果';
     resList.innerHTML='<div class="res-empty"><div class="ph-ico">'+ICON_SEARCH+'</div>'
-      +'<p>左の入力欄にカルテ番号を入れて<br>「検索」を押してください。</p></div>';
+      +'<p>左のタブで「カルテ番号」か「患者名」を選び、<br>入力して「検索」を押してください。</p></div>';
   }
-  function renderCandidates(q){
+  // mode: 'karte'=カルテ番号の前方一致 / 'name'=患者名の部分一致（いずれも未入力なら全件）
+  function renderCandidates(mode, q){
     var matches=[];
-    // 未入力なら全件、入力ありはカルテ番号の前方一致
-    Object.keys(patients).forEach(function(k){ if(q===''||k.indexOf(q)===0) matches.push(patients[k]); });
+    Object.keys(patients).forEach(function(k){
+      var p=patients[k];
+      if(mode==='name'){ if(q===''||(p.name && p.name.indexOf(q)!==-1)) matches.push(p); }
+      else { if(q===''||k.indexOf(q)===0) matches.push(p); }
+    });
     matches.sort(function(a,b){ return a.id<b.id?-1:1; });
     if(matches.length===0){
       resHead.textContent='検索結果';
+      var by=(mode==='name'?'患者名':'カルテ番号');
       resList.innerHTML='<div class="res-empty"><div class="ph-ico">'+ICON_SEARCH+'</div>'
-        +'<p>「'+q+'」に一致する患者がいません。<br><a class="mini-new" data-go="register">新規患者を登録</a> してください。</p></div>';
+        +'<p>'+by+'「'+q+'」に一致する患者がいません。<br><a class="mini-new" data-go="register">新規患者を登録</a> してください。</p></div>';
       return;
     }
     resHead.innerHTML=(q===''?'全患者':'検索結果')+' <span class="rc">'+matches.length+'</span> 件'
@@ -650,12 +688,31 @@
     resList.innerHTML=html;
     resList.querySelectorAll('[data-open]').forEach(function(r){ r.addEventListener('click',function(){ openPatient(r.dataset.open); }); });
   }
-  function doSearch(){
-    var q=document.getElementById('searchInput').value.trim();
-    renderCandidates(q); // 未入力なら全件表示
+  function doSearch(mode){
+    var q=(mode==='name'
+      ? document.getElementById('searchNameInput').value
+      : document.getElementById('searchInput').value).trim();
+    renderCandidates(mode, q); // 未入力なら全件表示
   }
-  document.getElementById('searchGo').addEventListener('click',doSearch);
-  document.getElementById('searchInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); });
+  // 検索ボタン（各タブ）
+  document.querySelectorAll('.search-go[data-search]').forEach(function(b){
+    b.addEventListener('click',function(){ doSearch(b.dataset.search); });
+  });
+  document.getElementById('searchInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch('karte'); });
+  document.getElementById('searchNameInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch('name'); });
+
+  // タブ切替
+  document.querySelectorAll('#searchTabs .tab').forEach(function(tb){
+    tb.addEventListener('click',function(){
+      var mode=tb.dataset.tab;
+      document.querySelectorAll('#searchTabs .tab').forEach(function(x){ x.classList.toggle('active', x===tb); });
+      document.getElementById('pane-karte').hidden = (mode!=='karte');
+      document.getElementById('pane-name').hidden  = (mode!=='name');
+      placeholderRight();
+      var el=document.getElementById(mode==='name'?'searchNameInput':'searchInput');
+      setTimeout(function(){ el.focus(); },30);
+    });
+  });
   placeholderRight();
 
   // ---- 患者を開く ----
