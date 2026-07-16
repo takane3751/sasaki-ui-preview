@@ -334,7 +334,9 @@
   .modal-actions{display:flex;gap:12px;justify-content:flex-end;padding:24px 26px 26px;margin-top:8px}
   .modal .sel-count{margin:14px 26px 0;background:var(--brand-soft);color:var(--brand-dark);border-radius:10px;padding:9px 13px;font-size:13px;font-weight:700}
 
-  /* 撮影日時フィールド＋カレンダーUI */
+  /* 撮影日時フィールド＋カレンダーUI（入力欄のすぐ下にアンカー表示） */
+  #dateOverlay .modal{overflow:visible}
+  .cal-anchor{position:relative}
   .cal-field{display:flex;gap:8px}
   .cal-field input{flex:1}
   .cal-field input[readonly]{cursor:pointer;background:#fff;caret-color:transparent}
@@ -343,32 +345,31 @@
     display:grid;place-items:center;color:var(--brand);cursor:pointer;transition:.15s;
   }
   .cal-ico:hover{border-color:var(--brand);background:var(--brand-soft)}
-  .cal-backdrop{position:absolute;inset:0;background:rgba(20,30,55,.18);z-index:1}
-  .cal-backdrop[hidden]{display:none}
   .cal-pop{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:322px;max-width:92%;
-    background:#fff;border-radius:16px;box-shadow:0 30px 70px -18px rgba(15,25,55,.6);padding:14px 16px 16px;
+    position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:30;background:#fff;border:1px solid var(--line);
+    border-radius:14px;box-shadow:0 20px 44px -14px rgba(15,25,55,.45);padding:12px 14px 14px;
   }
   .cal-pop[hidden]{display:none}
-  .cal-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-  .cal-nav{display:flex;align-items:center;gap:8px;flex:1}
-  .cal-nav button{border:1px solid var(--line);background:#fff;border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:15px;color:var(--ink-2);font-family:inherit;transition:.15s}
+  .cal-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .cal-nav{display:flex;align-items:center;gap:6px;flex:1}
+  .cal-nav button{border:1px solid var(--line);background:#fff;border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:15px;color:var(--ink-2);font-family:inherit;transition:.15s;flex:none}
   .cal-nav button:hover{border-color:var(--brand);color:var(--brand)}
-  .cal-nav #calTitle{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums;min-width:96px;text-align:center}
-  .cal-close{border:0;background:var(--surface-2);border-radius:9px;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--ink-2);font-family:inherit;flex:none;transition:.15s}
+  .cal-nav #calTitle{font-weight:800;font-size:14.5px;font-variant-numeric:tabular-nums;flex:1;text-align:center}
+  .cal-close{border:0;background:var(--surface-2);border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:13px;color:var(--ink-2);font-family:inherit;flex:none;transition:.15s}
   .cal-close:hover{background:#E5484D;color:#fff}
-  .cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
-  .cal-week span{text-align:center;font-size:11px;color:var(--mut);font-weight:700;padding:2px 0}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-  .cal-cell{border:0;background:transparent;border-radius:8px;height:34px;font-size:13.5px;cursor:pointer;font-family:inherit;color:var(--ink);font-variant-numeric:tabular-nums;transition:.12s}
+  .cal-week{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:2px}
+  .cal-week span{text-align:center;font-size:11px;color:var(--mut);font-weight:700;padding:2px 0;min-width:0}
+  .cal-week span:first-child{color:#D9534F}
+  .cal-week span:last-child{color:#3B82C4}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .cal-cell{min-width:0;padding:0;border:0;background:transparent;border-radius:8px;height:32px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ink);font-variant-numeric:tabular-nums;transition:.12s}
   .cal-cell:hover{background:var(--brand-soft)}
   .cal-cell.sel{background:var(--brand);color:#fff;font-weight:700}
   .cal-cell.empty{visibility:hidden;cursor:default}
-  .cal-time{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-2)}
+  .cal-time{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line-2)}
   .cal-time .cal-time-lbl{font-size:12.5px;font-weight:700;color:var(--ink-2)}
-  .cal-time select{height:38px;border:2px solid var(--line);border-radius:9px;padding:0 6px;font-size:15px;font-family:inherit;font-variant-numeric:tabular-nums;outline:0;background:#fff;cursor:pointer}
+  .cal-time select{height:36px;border:2px solid var(--line);border-radius:9px;padding:0 6px;font-size:14.5px;font-family:inherit;font-variant-numeric:tabular-nums;outline:0;background:#fff;cursor:pointer}
   .cal-time select:focus{border-color:var(--brand)}
-  .cal-pick{margin-top:12px;background:var(--brand-soft);border-radius:9px;padding:8px 12px;font-size:13.5px;font-weight:700;color:var(--brand-dark);text-align:center;font-variant-numeric:tabular-nums}
 
   /* ---- 凡例 ---- */
   .legend{margin:26px 4px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
@@ -570,37 +571,36 @@
           <div class="sel-count" id="dateSelCount">3枚を選択中</div>
           <div class="field">
             <label>撮影日時</label>
-            <div class="cal-field">
-              <input id="dateDisplay" readonly placeholder="カレンダーから選択">
-              <button class="cal-ico" id="calToggle" aria-label="カレンダーを開く">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </button>
+            <div class="cal-anchor">
+              <div class="cal-field">
+                <input id="dateDisplay" readonly placeholder="カレンダーから選択">
+                <button class="cal-ico" id="calToggle" aria-label="カレンダーを開く">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+              <!-- カレンダーUI：入力欄のすぐ下に表示。右上×＝この内容で確定して閉じる／外側クリック＝キャンセル -->
+              <div class="cal-pop" id="calPop" hidden>
+                <div class="cal-head">
+                  <div class="cal-nav">
+                    <button id="calPrev" aria-label="前の月">‹</button>
+                    <span id="calTitle">2026年7月</span>
+                    <button id="calNext" aria-label="次の月">›</button>
+                  </div>
+                  <button class="cal-close" id="calClose" aria-label="閉じる（この内容で確定）">✕</button>
+                </div>
+                <div class="cal-week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+                <div class="cal-grid" id="calGrid"></div>
+                <div class="cal-time">
+                  <span class="cal-time-lbl">時刻</span>
+                  <select id="calHour"></select><span>：</span><select id="calMin"></select>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-actions">
             <button class="btn-ghost" id="dateCancel">キャンセル</button>
             <button class="btn-primary" id="dateExec">実行</button>
           </div>
-        </div>
-
-        <!-- カレンダーUI（ポップアップ外＝キャンセル／右上×＝閉じる） -->
-        <div class="cal-backdrop" id="calBackdrop" hidden></div>
-        <div class="cal-pop" id="calPop" hidden>
-          <div class="cal-head">
-            <div class="cal-nav">
-              <button id="calPrev" aria-label="前の月">‹</button>
-              <span id="calTitle">2026年7月</span>
-              <button id="calNext" aria-label="次の月">›</button>
-            </div>
-            <button class="cal-close" id="calClose" aria-label="閉じる（この内容で確定）">✕</button>
-          </div>
-          <div class="cal-week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
-          <div class="cal-grid" id="calGrid"></div>
-          <div class="cal-time">
-            <span class="cal-time-lbl">時刻</span>
-            <select id="calHour"></select><span>：</span><select id="calMin"></select>
-          </div>
-          <div class="cal-pick" id="calPick">2026/07/14 12:00</div>
         </div>
       </div>
 
@@ -974,9 +974,8 @@
       c.addEventListener('click',function(){ calSel.y=calY; calSel.m=calM; calSel.d=+c.dataset.d; renderCal(); apply(); });
     });
   }
-  function apply(){ // 月/日/時刻を選ぶたびに入力欄と選択中表示へ反映
+  function apply(){ // 月/日/時刻を選ぶたびに入力欄へ即反映
     document.getElementById('dateDisplay').value=fmtSel();
-    document.getElementById('calPick').textContent=fmtSel();
   }
   function openCal(){
     calPrev=document.getElementById('dateDisplay').value; // キャンセル復帰用
@@ -984,16 +983,22 @@
     calSel = m ? {y:+m[1],m:+m[2],d:+m[3],hh:+m[4],mm:+m[5]} : {y:2026,m:7,d:14,hh:12,mm:0};
     calY=calSel.y; calM=calSel.m;
     buildTimeOptions(); renderCal();
-    document.getElementById('calPick').textContent=fmtSel();
-    document.getElementById('calBackdrop').hidden=false;
     document.getElementById('calPop').hidden=false;
   }
-  function closeCal(){ document.getElementById('calBackdrop').hidden=true; document.getElementById('calPop').hidden=true; }
+  function closeCal(){ document.getElementById('calPop').hidden=true; }
   function cancelCal(){ document.getElementById('dateDisplay').value=calPrev; closeCal(); } // 外側クリック＝キャンセル
-  document.getElementById('calToggle').addEventListener('click',openCal);
-  document.getElementById('dateDisplay').addEventListener('click',openCal);
+  document.getElementById('calToggle').addEventListener('click',function(e){ e.stopPropagation(); openCal(); });
+  document.getElementById('dateDisplay').addEventListener('click',function(e){ e.stopPropagation(); openCal(); });
   document.getElementById('calClose').addEventListener('click',closeCal);          // ×＝この内容で閉じる（確定）
-  document.getElementById('calBackdrop').addEventListener('click',cancelCal);       // ポップアップ外＝キャンセル
+  // ポップアップ外をクリック＝キャンセル（実行ボタンは選択値をそのまま確定して使う）
+  document.addEventListener('mousedown',function(e){
+    var pop=document.getElementById('calPop'); if(pop.hidden) return;
+    if(pop.contains(e.target)) return;
+    if(document.getElementById('calToggle').contains(e.target)) return;
+    if(e.target===document.getElementById('dateDisplay')) return;
+    if(document.getElementById('dateExec').contains(e.target)) return;
+    cancelCal();
+  });
   document.getElementById('calPrev').addEventListener('click',function(){ calM--; if(calM<1){calM=12;calY--;} renderCal(); });
   document.getElementById('calNext').addEventListener('click',function(){ calM++; if(calM>12){calM=1;calY++;} renderCal(); });
   document.getElementById('calHour').addEventListener('change',function(){ calSel.hh=+this.value; apply(); });
