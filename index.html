@@ -346,8 +346,8 @@
   }
   .cal-ico:hover{border-color:var(--brand);background:var(--brand-soft)}
   .cal-pop{
-    position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:30;background:#fff;border:1px solid var(--line);
-    border-radius:14px;box-shadow:0 20px 44px -14px rgba(15,25,55,.45);padding:12px 14px 14px;
+    position:absolute;top:calc(100% + 8px);left:0;width:426px;max-width:calc(100vw - 48px);z-index:30;background:#fff;
+    border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 44px -14px rgba(15,25,55,.45);padding:12px 14px 14px;
   }
   .cal-pop[hidden]{display:none}
   .cal-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -357,19 +357,27 @@
   .cal-nav #calTitle{font-weight:800;font-size:14.5px;font-variant-numeric:tabular-nums;flex:1;text-align:center}
   .cal-close{border:0;background:var(--surface-2);border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:13px;color:var(--ink-2);font-family:inherit;flex:none;transition:.15s}
   .cal-close:hover{background:#E5484D;color:#fff}
-  .cal-week{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:2px}
+  /* 左：カレンダー ／ 右：時刻 の横並び */
+  .cal-body{display:flex;gap:12px}
+  .cal-left{flex:1;min-width:0}
+  .cal-week{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:3px}
   .cal-week span{text-align:center;font-size:11px;color:var(--mut);font-weight:700;padding:2px 0;min-width:0}
   .cal-week span:first-child{color:#D9534F}
   .cal-week span:last-child{color:#3B82C4}
   .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-  .cal-cell{min-width:0;padding:0;border:0;background:transparent;border-radius:8px;height:32px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ink);font-variant-numeric:tabular-nums;transition:.12s}
+  .cal-cell{min-width:0;padding:0;border:0;background:transparent;border-radius:8px;height:30px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ink);font-variant-numeric:tabular-nums;transition:.12s}
   .cal-cell:hover{background:var(--brand-soft)}
   .cal-cell.sel{background:var(--brand);color:#fff;font-weight:700}
   .cal-cell.empty{visibility:hidden;cursor:default}
-  .cal-time{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line-2)}
-  .cal-time .cal-time-lbl{font-size:12.5px;font-weight:700;color:var(--ink-2)}
-  .cal-time select{height:36px;border:2px solid var(--line);border-radius:9px;padding:0 6px;font-size:14.5px;font-family:inherit;font-variant-numeric:tabular-nums;outline:0;background:#fff;cursor:pointer}
-  .cal-time select:focus{border-color:var(--brand)}
+  .cal-timecol{flex:none;width:120px;display:flex;flex-direction:column;border-left:1px solid var(--line-2);padding-left:12px}
+  .cal-timecol .lbl{font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:6px;text-align:center}
+  .cal-scrolls{display:flex;gap:8px;flex:1;min-height:0}
+  .time-list{flex:1;max-height:200px;overflow-y:auto;border:1px solid var(--line);border-radius:9px;padding:3px;scrollbar-width:thin}
+  .time-list::-webkit-scrollbar{width:6px}
+  .time-list::-webkit-scrollbar-thumb{background:#C7D2DC;border-radius:6px}
+  .time-item{padding:7px 0;text-align:center;border-radius:7px;font-size:13.5px;font-variant-numeric:tabular-nums;cursor:pointer;color:var(--ink);transition:.1s}
+  .time-item:hover{background:var(--brand-soft)}
+  .time-item.sel{background:var(--brand);color:#fff;font-weight:700}
 
   /* ---- 凡例 ---- */
   .legend{margin:26px 4px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
@@ -588,11 +596,18 @@
                   </div>
                   <button class="cal-close" id="calClose" aria-label="閉じる（この内容で確定）">✕</button>
                 </div>
-                <div class="cal-week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
-                <div class="cal-grid" id="calGrid"></div>
-                <div class="cal-time">
-                  <span class="cal-time-lbl">時刻</span>
-                  <select id="calHour"></select><span>：</span><select id="calMin"></select>
+                <div class="cal-body">
+                  <div class="cal-left">
+                    <div class="cal-week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+                    <div class="cal-grid" id="calGrid"></div>
+                  </div>
+                  <div class="cal-timecol">
+                    <div class="lbl">時刻（時 : 分）</div>
+                    <div class="cal-scrolls">
+                      <div class="time-list" id="calHour"></div>
+                      <div class="time-list" id="calMin"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -953,11 +968,21 @@
   var calY, calM, calSel, calPrev='';
   function pad(n){ return (n<10?'0':'')+n; }
   function fmtSel(){ return calSel.y+'/'+pad(calSel.m)+'/'+pad(calSel.d)+' '+pad(calSel.hh)+':'+pad(calSel.mm); }
-  function buildTimeOptions(){
-    var h=document.getElementById('calHour'), mi=document.getElementById('calMin');
-    if(h.options.length===0){ for(var i=0;i<24;i++) h.add(new Option(pad(i),i)); }
-    if(mi.options.length===0){ for(var j=0;j<60;j++) mi.add(new Option(pad(j),j)); }
-    h.value=calSel.hh; mi.value=calSel.mm;
+  function buildTime(){
+    fillTime(document.getElementById('calHour'), 24, 'hh');
+    fillTime(document.getElementById('calMin'), 60, 'mm');
+  }
+  function fillTime(el, n, key){
+    var html='';
+    for(var i=0;i<n;i++){ html+='<div class="time-item'+(i===calSel[key]?' sel':'')+'" data-v="'+i+'">'+pad(i)+'</div>'; }
+    el.innerHTML=html;
+    el.querySelectorAll('.time-item').forEach(function(it){
+      it.addEventListener('click',function(){
+        el.querySelectorAll('.time-item').forEach(function(x){ x.classList.remove('sel'); });
+        it.classList.add('sel'); calSel[key]=+it.dataset.v; apply();
+      });
+    });
+    var s=el.querySelector('.time-item.sel'); if(s) s.scrollIntoView({block:'center'});
   }
   function renderCal(){
     document.getElementById('calTitle').textContent=calY+'年'+calM+'月';
@@ -982,7 +1007,7 @@
     var m=calPrev.match(/^(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2})$/);
     calSel = m ? {y:+m[1],m:+m[2],d:+m[3],hh:+m[4],mm:+m[5]} : {y:2026,m:7,d:14,hh:12,mm:0};
     calY=calSel.y; calM=calSel.m;
-    buildTimeOptions(); renderCal();
+    buildTime(); renderCal();
     document.getElementById('calPop').hidden=false;
   }
   function closeCal(){ document.getElementById('calPop').hidden=true; }
@@ -1001,8 +1026,6 @@
   });
   document.getElementById('calPrev').addEventListener('click',function(){ calM--; if(calM<1){calM=12;calY--;} renderCal(); });
   document.getElementById('calNext').addEventListener('click',function(){ calM++; if(calM>12){calM=1;calY++;} renderCal(); });
-  document.getElementById('calHour').addEventListener('change',function(){ calSel.hh=+this.value; apply(); });
-  document.getElementById('calMin').addEventListener('change',function(){ calSel.mm=+this.value; apply(); });
 
   document.getElementById('linkCancel').addEventListener('click',function(){ closeModal('#linkOverlay'); });
   document.getElementById('linkExec').addEventListener('click',function(){
