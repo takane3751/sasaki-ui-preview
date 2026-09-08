@@ -1,11 +1,16 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
 <title>DIMAGE｜口腔内写真 管理アプリ</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="DIMAGE（ディマージュ）は、口腔内写真（静止画）を患者ごとに簡単に保存・管理できる、買い切りのPC用アプリです。令和8年度改定の算定に必要な「写真の適切な管理」を、いちばんやさしく。">
+<link rel="icon" href="dimage-img/logo.png">
 <style>
   :root{
-    --brand:#0099E1;--brand-dark:#007BB8;--brand-soft:#E2F4FC;--brand-tint:#F2FAFE;
-    --ground:#F4F7FA;--surface:#FFFFFF;--ink:#16222E;--ink-2:#3A4A57;--mut:#6B7986;
-    --line:#E1E8EE;--line-2:#EDF1F5;--ok:#1E9E6A;--ok-soft:#E6F5EE;--accent:#F4A026;
+    --brand:#5A9DFF;--brand-dark:#3B7EE6;--brand-deep:#2A63C4;--brand-soft:#EAF2FF;--brand-tint:#F5F8FF;
+    --ground:#F4F7FB;--surface:#FFFFFF;--ink:#16222E;--ink-2:#3A4A57;--mut:#6B7986;
+    --line:#E1E8F0;--line-2:#EDF1F6;--ok:#1E9E6A;--ok-soft:#E6F5EE;--accent:#F4A026;
     --r:16px;--maxw:1080px;
     --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Meiryo",system-ui,sans-serif;
   }
@@ -23,13 +28,13 @@
   .hdr{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .hdr .wrap{display:flex;align-items:center;gap:14px;height:62px}
   .logo{display:flex;align-items:center;gap:10px}
-  .logo .mk{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--brand),#33B4EC);display:grid;place-items:center;flex:none}
+  .logo img{width:32px;height:32px;flex:none}
   .logo .nm{font-size:20px;font-weight:800;letter-spacing:.06em;color:#12303C}
   .nav{margin-left:auto;display:flex;align-items:center;gap:22px}
   .nav a{font-size:13.5px;font-weight:700;color:var(--ink-2)}
   .nav a:hover{color:var(--brand-dark)}
   .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:11px;font-family:inherit;font-weight:800;cursor:pointer;transition:.15s;text-decoration:none}
-  .btn-primary{background:var(--brand);color:#fff;padding:11px 20px;font-size:14.5px;box-shadow:0 8px 18px -10px rgba(0,153,225,.9)}
+  .btn-primary{background:var(--brand);color:#fff;padding:11px 20px;font-size:14.5px;box-shadow:0 8px 18px -10px rgba(90,157,255,.9)}
   .btn-primary:hover{background:var(--brand-dark)}
   .btn-lg{padding:15px 30px;font-size:16px;border-radius:13px}
   .btn-ghost{background:#fff;color:var(--brand-dark);border:2px solid var(--line);padding:13px 26px;font-size:15px;border-radius:13px}
@@ -37,17 +42,17 @@
   @media(max-width:820px){.nav a{display:none}.nav .btn{display:inline-flex}}
 
   /* hero */
-  .hero{background:radial-gradient(900px 460px at 82% -8%,var(--brand-soft) 0%,transparent 62%),linear-gradient(180deg,#fff,#FBFDFE);border-bottom:1px solid var(--line)}
+  .hero{background:radial-gradient(900px 460px at 82% -8%,var(--brand-soft) 0%,transparent 62%),linear-gradient(180deg,#fff,#FBFDFF);border-bottom:1px solid var(--line)}
   .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:60px 22px 56px}
   @media(max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:30px;padding:44px 22px}}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand-dark);background:var(--brand-soft);border:1px solid #C9EAF8;border-radius:999px;padding:6px 13px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand-dark);background:var(--brand-soft);border:1px solid #CFE0FF;border-radius:999px;padding:6px 13px}
   .hero h1{font-size:clamp(30px,5.4vw,46px);line-height:1.3;margin:16px 0 8px;letter-spacing:.01em}
   .hero h1 .b{color:var(--brand-dark)}
   .hero .lead{font-size:16.5px;color:var(--ink-2);margin:0 0 24px;max-width:560px}
   .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
   .hero-meta{margin-top:18px;font-size:12.5px;color:var(--mut);display:flex;gap:8px 18px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:16px}
   .hero-meta b{color:var(--ink-2)}
-  .shot{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(20,50,70,.5)}
+  .shot{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(20,50,90,.45)}
   .shot.frame{background:#EEF2F6;padding:0}
   .shot .bar{height:26px;background:linear-gradient(#FBFCFF,#EEF2F6);display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid #E3E9EF}
   .shot .bar i{width:9px;height:9px;border-radius:50%;background:#D3DBE4;display:block}
@@ -60,19 +65,19 @@
   .sec-lead{color:var(--ink-2);margin:0 auto 36px;font-size:15.5px;text-align:center;max-width:640px}
 
   /* 算定 highlight */
-  .calc{background:linear-gradient(135deg,#062B3C,#0C4A66);border-radius:22px;color:#fff;padding:40px 40px 34px;position:relative;overflow:hidden}
+  .calc{background:linear-gradient(135deg,#0B2A55,#1F4F9E);border-radius:22px;color:#fff;padding:40px 40px 34px;position:relative;overflow:hidden}
   @media(max-width:640px){.calc{padding:30px 24px}}
   .calc .pts{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
   .calc .pts .n{font-size:clamp(54px,10vw,86px);font-weight:800;line-height:.9;color:#fff;letter-spacing:.01em}
   .calc .pts .n small{font-size:30px;font-weight:800}
-  .calc .pts .t{font-size:17px;font-weight:700;color:#CFE6F1}
+  .calc .pts .t{font-size:17px;font-weight:700;color:#D6E4FA}
   .calc h3{font-size:20px;margin:14px 0 8px;color:#fff}
-  .calc p{margin:0 0 12px;color:#C7DDE9;font-size:14.5px;line-height:1.8;max-width:760px}
-  .calc .req{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:14px 18px;margin-top:14px;font-size:14px;color:#EAF6FC}
+  .calc p{margin:0 0 12px;color:#CDDCF3;font-size:14.5px;line-height:1.8;max-width:760px}
+  .calc .req{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:14px 18px;margin-top:14px;font-size:14px;color:#EEF4FD}
   .calc .req b{color:#fff}
   .calc .flow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
   .calc .flow .step{background:rgba(255,255,255,.1);border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
-  .calc .flow .arr{color:#6FA8C2;align-self:center;font-size:16px}
+  .calc .flow .arr{color:#8FB4EA;align-self:center;font-size:16px}
   .disc{margin:18px auto 0;font-size:11.5px;color:var(--mut);line-height:1.7;max-width:820px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
 
   /* target cards */
@@ -98,6 +103,12 @@
   .flist{display:grid;gap:8px}
   .flist .fi{display:flex;gap:10px;font-size:14px;color:var(--ink-2)}
   .flist .fi svg{flex:none;color:var(--brand);margin-top:2px}
+  .more{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  @media(max-width:760px){.more{grid-template-columns:1fr}}
+  .more .m{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .more .m img{aspect-ratio:16/9;object-fit:cover;object-position:top}
+  .more .m .cap{padding:12px 14px;font-size:13.5px;color:var(--ink-2)}
+  .more .m .cap b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:2px}
 
   /* steps */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -107,12 +118,39 @@
   .stp h4{margin:0 0 6px;font-size:16px}
   .stp p{margin:0;font-size:13.5px;color:var(--mut)}
 
-  /* install */
-  .inst{display:grid;gap:14px;max-width:760px;margin:0 auto}
-  .inst .row{display:flex;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px;align-items:flex-start}
-  .inst .n{width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-weight:800;display:grid;place-items:center;flex:none}
-  .inst .row h4{margin:0 0 3px;font-size:15.5px}
-  .inst .row p{margin:0;font-size:13.5px;color:var(--mut);line-height:1.7}
+  /* price */
+  .price{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch;max-width:900px;margin:0 auto}
+  @media(max-width:760px){.price{grid-template-columns:1fr}}
+  .pcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px 28px 24px;position:relative}
+  .pcard.main{border:2px solid var(--brand);box-shadow:0 30px 60px -40px rgba(90,157,255,.8)}
+  .pcard .tag{position:absolute;top:-13px;left:24px;background:var(--brand);color:#fff;font-size:12px;font-weight:800;letter-spacing:.08em;border-radius:999px;padding:4px 12px}
+  .pcard .lbl{font-size:13px;font-weight:800;color:var(--mut);letter-spacing:.06em}
+  .pcard .amt{display:flex;align-items:baseline;gap:6px;margin:6px 0 2px}
+  .pcard .amt .n{font-size:clamp(40px,7vw,56px);font-weight:800;line-height:1;color:var(--ink);letter-spacing:.01em}
+  .pcard .amt .u{font-size:16px;font-weight:700;color:var(--ink-2)}
+  .pcard .list{font-size:14px;color:var(--mut);text-decoration:line-through;margin-top:4px}
+  .pcard .off{display:inline-block;margin-left:8px;background:#FFF1E0;color:#B86A00;border-radius:6px;padding:1px 8px;font-size:12px;font-weight:800;text-decoration:none}
+  .pcard ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  .pcard li{font-size:14px;color:var(--ink-2);display:flex;gap:9px;line-height:1.6}
+  .pcard li svg{flex:none;color:var(--brand);margin-top:3px}
+  .pcard .fn{font-size:12px;color:var(--mut);margin-top:14px;line-height:1.7}
+  .pcard.sub{background:var(--brand-tint)}
+  .pcard.sub h3{margin:0 0 10px;font-size:17px}
+  .pcard.sub p{margin:0 0 10px;font-size:14px;color:var(--ink-2);line-height:1.8}
+
+  /* flow (導入の流れ) */
+  .flow5{display:grid;gap:14px;max-width:820px;margin:0 auto}
+  .flow5 .row{display:flex;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px;align-items:flex-start}
+  .flow5 .row.you{border-left:5px solid var(--brand)}
+  .flow5 .row.us{border-left:5px solid #C9D6EA}
+  .flow5 .n{width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-weight:800;display:grid;place-items:center;flex:none}
+  .flow5 .row.us .n{background:#8FA6C8}
+  .flow5 .row h4{margin:0 0 3px;font-size:15.5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .flow5 .row h4 .who{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--brand-dark);background:var(--brand-soft);border-radius:6px;padding:1px 8px}
+  .flow5 .row.us h4 .who{color:#5A6F90;background:#EDF2FA}
+  .flow5 .row p{margin:0;font-size:13.5px;color:var(--mut);line-height:1.7}
+  .callout{max-width:820px;margin:18px auto 0;background:#FFF8EC;border:1px solid #F3DDB5;border-radius:12px;padding:14px 18px;font-size:13.5px;color:#6B4A12;line-height:1.75;display:flex;gap:10px}
+  .callout b{color:#8A5A00}
 
   /* license / dealer */
   .lic{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -120,7 +158,7 @@
   .lcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
   .lcard h3{margin:0 0 8px;font-size:17px;display:flex;align-items:center;gap:9px}
   .lcard p{margin:0 0 8px;font-size:14px;color:var(--ink-2);line-height:1.75}
-  .dealer{background:var(--brand-tint);border:1px solid #CFEAF7;border-radius:16px;padding:22px 24px;margin-top:18px}
+  .dealer{background:var(--brand-tint);border:1px solid #D5E3FB;border-radius:16px;padding:22px 24px;margin-top:18px}
   .dealer h3{margin:0 0 8px;font-size:17px;color:var(--brand-dark)}
   .dealer p{margin:0 0 8px;font-size:14px;color:var(--ink-2);line-height:1.8}
   .dealer .names{font-size:13px;color:var(--mut);margin-top:6px}
@@ -128,7 +166,7 @@
   /* Q&A */
   .qa{max-width:820px;margin:0 auto;display:grid;gap:10px}
   .qa details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:2px 18px;transition:.15s}
-  .qa details[open]{border-color:var(--brand);box-shadow:0 10px 24px -18px rgba(0,153,225,.6)}
+  .qa details[open]{border-color:var(--brand);box-shadow:0 10px 24px -18px rgba(90,157,255,.6)}
   .qa summary{list-style:none;cursor:pointer;padding:15px 0;font-weight:700;font-size:15px;display:flex;gap:12px;align-items:flex-start}
   .qa summary::-webkit-details-marker{display:none}
   .qa summary .q{color:var(--brand);font-weight:800;flex:none}
@@ -137,20 +175,21 @@
   .qa .a{padding:0 0 16px 26px;font-size:14px;color:var(--ink-2);line-height:1.85}
 
   /* env */
-  .env{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:820px;margin:0 auto}
-  @media(max-width:700px){.env{grid-template-columns:1fr}}
+  .env{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:900px;margin:0 auto}
+  @media(max-width:800px){.env{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.env{grid-template-columns:1fr}}
   .env .e{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
   .env .e .k{font-size:11px;letter-spacing:.08em;color:var(--brand);font-weight:800;margin-bottom:5px}
   .env .e .v{font-size:14px;color:var(--ink-2)}
 
   /* form */
-  .apply{background:linear-gradient(135deg,var(--brand),#19A8EC)}
+  .apply{background:linear-gradient(135deg,var(--brand),#7DB4FF)}
   .apply .wrap{max-width:820px}
   .apply .head{text-align:center;color:#fff;margin-bottom:24px}
   .apply .head h2{color:#fff;font-size:28px;margin:0 0 8px}
-  .apply .head p{color:#EAF7FE;font-size:15px;margin:0}
-  .formcard{background:#fff;border-radius:18px;padding:28px 26px;box-shadow:0 30px 60px -30px rgba(10,40,60,.6)}
-  .note-dealer{background:var(--brand-tint);border:1px solid #CFEAF7;border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink-2);line-height:1.8;margin-bottom:20px}
+  .apply .head p{color:#F0F6FF;font-size:15px;margin:0}
+  .formcard{background:#fff;border-radius:18px;padding:28px 26px;box-shadow:0 30px 60px -30px rgba(10,40,90,.6)}
+  .note-dealer{background:var(--brand-tint);border:1px solid #D5E3FB;border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink-2);line-height:1.8;margin-bottom:20px}
   .note-dealer b{color:var(--brand-dark)}
   .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media(max-width:640px){.fgrid{grid-template-columns:1fr}}
@@ -159,36 +198,38 @@
   .fld label{font-size:12.5px;font-weight:700;color:var(--ink-2)}
   .fld label .req{color:#E5484D;font-size:11px;margin-left:4px}
   .fld label .opt{color:var(--mut);font-size:11px;margin-left:4px;font-weight:600}
-  .fld input,.fld textarea{border:2px solid var(--line);border-radius:11px;padding:12px 14px;font-size:15px;font-family:inherit;outline:0;transition:.15s;color:var(--ink);background:#fff}
-  .fld input:focus,.fld textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+  .fld input,.fld textarea,.fld select{border:2px solid var(--line);border-radius:11px;padding:12px 14px;font-size:15px;font-family:inherit;outline:0;transition:.15s;color:var(--ink);background:#fff}
+  .fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
   .fld .hint{font-size:11.5px;color:var(--mut)}
+  .hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
   .form-actions{margin-top:22px;text-align:center}
-  .form-note{font-size:11.5px;color:var(--mut);margin-top:12px}
+  .form-note{font-size:11.5px;color:var(--mut);margin-top:12px;line-height:1.7}
   .thanks{display:none;text-align:center;padding:30px 10px}
   .thanks.show{display:block}
   .thanks .ic{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin:0 auto 14px}
   .thanks h3{margin:0 0 8px;font-size:20px}
-  .thanks p{margin:0;color:var(--ink-2);font-size:14px}
+  .thanks p{margin:0 0 10px;color:var(--ink-2);font-size:14px;line-height:1.8}
+  .thanks .warn{display:inline-block;background:#FFF8EC;border:1px solid #F3DDB5;color:#6B4A12;border-radius:10px;padding:10px 14px;font-size:13px;text-align:left;line-height:1.7}
 
-  footer{background:#0E1F29;color:#AEC0CB;padding:34px 0 40px}
+  footer{background:#0E1A2B;color:#AEBBCB;padding:34px 0 40px}
   footer .wrap{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:center;font-size:13px}
   footer .logo .nm{color:#fff}
   footer .sp{flex:1}
-  footer a{color:#CFE0E9}
-  .fineprint{font-size:11px;color:#7C8E99;margin-top:10px}
+  footer a{color:#CFDCEA}
+  .fineprint{font-size:11px;color:#7C8A99;margin-top:10px;line-height:1.7}
 </style>
+</head>
+<body>
 
 <!-- header -->
 <header class="hdr">
   <div class="wrap">
-    <div class="logo">
-      <span class="mk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="#fff" stroke-width="1.7"/><circle cx="11.5" cy="13" r="2.6" stroke="#fff" stroke-width="1.7"/></svg></span>
-      <span class="nm">DIMAGE</span>
-    </div>
+    <a class="logo" href="#top"><img src="dimage-img/logo.png" alt="DIMAGE"><span class="nm">DIMAGE</span></a>
     <nav class="nav">
       <a href="#calc">算定メリット</a>
       <a href="#feature">できること</a>
-      <a href="#install">導入の流れ</a>
+      <a href="#price">料金</a>
+      <a href="#flow">導入の流れ</a>
       <a href="#qa">Q&amp;A</a>
       <a class="btn btn-primary" href="#apply">お申し込み</a>
     </nav>
@@ -196,25 +237,25 @@
 </header>
 
 <!-- hero -->
-<section class="hero" style="padding:0">
+<section class="hero" id="top" style="padding:0">
   <div class="wrap">
     <div>
       <span class="eyebrow">口腔内写真 管理アプリ ／ 買い切り</span>
       <h1>その一枚を、<span class="b">算定に。</span></h1>
       <p class="lead">DIMAGE（ディマージュ）は、口腔内写真（静止画）を患者ごとに保存・管理するだけの、シンプルなPC用アプリ。令和8年度改定で求められる「写真の適切な管理」を、いちばんやさしく整えます。</p>
       <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="#apply">導入を相談する（ディーラー経由）</a>
+        <a class="btn btn-primary btn-lg" href="#apply">導入を申し込む・相談する</a>
         <a class="btn btn-ghost btn-lg" href="#calc">算定メリットを見る</a>
       </div>
       <div class="hero-meta">
-        <span><b>対応：</b>Windows（Mac版は近日）</span>
-        <span><b>提供：</b>買い切り</span>
+        <span><b>対応：</b>Windows 10／11（Mac版は今後対応）</span>
+        <span><b>料金：</b>買い切り・参考販売価格 64,000円（税抜）</span>
         <span><b>ご購入：</b>お取引の歯科ディーラー経由</span>
       </div>
     </div>
     <div class="shot frame">
       <div class="bar"><i></i><i></i><i></i></div>
-      <img src="dimage-img/shot-gallery.png" alt="DIMAGE 画像一覧画面">
+      <img src="dimage-img/fix-gallery.jpg" alt="DIMAGE 患者画像一覧画面" loading="eager">
     </div>
   </div>
 </section>
@@ -255,13 +296,13 @@
   <div class="wrap">
     <p class="kicker">FOR WHOM</p>
     <h2 class="sec">高機能は、いりません。という先生へ。</h2>
-    <p class="sec-lead">DIMAGEは、保険診療を中心とされ、最新設備や高額な機器の導入までは考えていない医院のための、シンプルで安価な写真管理アプリです。</p>
+    <p class="sec-lead">DIMAGEは、保険診療を中心とされ、最新設備や高額な機器の導入までは考えていない医院のための、シンプルで手の届く写真管理アプリです。</p>
     <div class="cols">
       <div class="tcard yes">
         <h3>✓ こんな医院に向いています</h3>
         <ul>
           <li>保険診療が中心で、とにかく簡単に写真を残したい</li>
-          <li>月額や余計な機能は不要。低コストで導入したい</li>
+          <li>月額や余計な機能は不要。買い切りで導入したい</li>
           <li>PCが得意でないスタッフでも迷わず使いたい</li>
           <li>改定に対応して、算定の取りこぼしをなくしたい</li>
         </ul>
@@ -286,12 +327,12 @@
     <p class="sec-lead">「点数を取るための管理」に必要な機能だけ。実際の画面でご覧ください。</p>
 
     <div class="feat">
-      <div class="fx shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/shot-search.png" alt="患者検索画面"></div>
+      <div class="fx shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/fix-search-karte.jpg" alt="患者検索画面（カルテ番号）" loading="lazy"></div>
       <div>
         <h3>患者ごとに保存、すぐ呼び出せる</h3>
-        <p>カルテ番号＋氏名で登録し、写真を患者に紐づけて保存。呼び出しは番号でも患者名でも。桁数が違っても前方一致で候補を表示します。</p>
+        <p>カルテ番号（氏名は任意）で登録し、写真を患者に紐づけて保存。呼び出しは番号でも患者名でも。桁数が違っても前方一致で候補を表示します。</p>
         <div class="flist">
-          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>カルテ番号／患者名で検索</div>
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>カルテ番号（前方一致）／患者名（部分一致）で検索</div>
           <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>候補一覧に総枚数・最終撮影日を表示</div>
         </div>
       </div>
@@ -300,25 +341,43 @@
     <div class="feat">
       <div class="fx">
         <h3>撮影日時で自動整理。あとからでも整う</h3>
-        <p>取り込むと、写真の撮影日時（Exif）を自動で読み取り、日付ごとに整列。日時情報がない写真は「日時未設定」としてまとめて表示し、あとから設定できます。</p>
+        <p>取り込むと、写真の撮影日時（Exif）を自動で読み取り、日付ごとに整列。日時情報がない写真は「日時未設定」としてまとめて表示し、カレンダーからまとめて設定できます。</p>
         <div class="flist">
-          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>撮影日時で日付グループ表示</div>
-          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>撮影日時はカレンダーで後から変更可</div>
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>撮影日時で日付グループ表示（新しい順）</div>
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>複数枚を選んで撮影日時をまとめて変更</div>
         </div>
       </div>
-      <div class="shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/shot-undated.png" alt="日時未設定の一覧画面"></div>
+      <div class="shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/fix-datetime.jpg" alt="撮影日時を変更画面" loading="lazy"></div>
     </div>
 
     <div class="feat">
-      <div class="fx shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/shot-detail.png" alt="画像詳細画面"></div>
+      <div class="fx shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/fix-detail.jpg" alt="画像詳細画面" loading="lazy"></div>
       <div>
-        <h3>1タップで拡大。取り違えも付け替えでリカバリー</h3>
-        <p>サムネイルをタップで拡大表示。カルテ番号を間違えて取り込んでしまっても、対象の写真を選んで別の患者へまとめて付け替えられます。</p>
+        <h3>1クリックで拡大。患者さんへの説明にも</h3>
+        <p>サムネイルをクリックすると大きく表示。前後の写真へ送りながら、チェアサイドでの説明にそのまま使えます。</p>
         <div class="flist">
-          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>拡大表示・前後送り</div>
-          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>「紐付け変更」で別患者へ付け替え</div>
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>拡大表示・前後送り・撮影日時の表示</div>
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>不要な写真は選んで削除</div>
         </div>
       </div>
+    </div>
+
+    <div class="feat">
+      <div class="fx">
+        <h3>取り違えても、付け替えでリカバリー</h3>
+        <p>カルテ番号を間違えて取り込んでしまっても大丈夫。対象の写真にチェックを入れ、移動先のカルテ番号を入れるだけで、別の患者へまとめて付け替えられます。</p>
+        <div class="flist">
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>「紐付け変更」で別患者へ一括移動</div>
+          <div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>患者情報（カルテ番号・氏名）の編集</div>
+        </div>
+      </div>
+      <div class="shot frame"><div class="bar"><i></i><i></i><i></i></div><img src="dimage-img/fix-relink.jpg" alt="紐付けを変更画面" loading="lazy"></div>
+    </div>
+
+    <div class="more">
+      <div class="m"><img src="dimage-img/fix-register.jpg" alt="新規患者を登録" loading="lazy"><div class="cap"><b>新規患者を登録</b>カルテ番号を入れるだけ。氏名は任意です。</div></div>
+      <div class="m"><img src="dimage-img/fix-storage.jpg" alt="保存先の設定" loading="lazy"><div class="cap"><b>保存先は自由に</b>本体PCのほか、外付けHDD／SSDも指定できます。</div></div>
+      <div class="m"><img src="dimage-img/fix-license.jpg" alt="ライセンス認証" loading="lazy"><div class="cap"><b>ライセンス認証は初回のみ</b>カードの16桁コードと医院名を入れて完了。</div></div>
     </div>
   </div>
 </section>
@@ -331,78 +390,113 @@
     <p class="sec-lead">ITが苦手なスタッフでも、その日から使えます。</p>
     <div class="steps">
       <div class="stp"><div class="no">1</div><h4>患者を登録</h4><p>カルテ番号を入れるだけ（氏名は任意）</p></div>
-      <div class="stp"><div class="no">2</div><h4>写真を取り込む</h4><p>「画像を取り込む」から選ぶだけ</p></div>
+      <div class="stp"><div class="no">2</div><h4>写真を取り込む</h4><p>「画像を取り込む」から選ぶだけ（JPEG／PNG）</p></div>
       <div class="stp"><div class="no">3</div><h4>必要なとき呼び出す</h4><p>番号か名前で検索して表示</p></div>
     </div>
   </div>
 </section>
 
-<!-- インストールの流れ -->
-<section id="install" class="alt">
+<!-- 料金 -->
+<section id="price" class="alt">
   <div class="wrap">
-    <p class="kicker">SETUP</p>
-    <h2 class="sec">導入・インストールの流れ</h2>
-    <p class="sec-lead">3分ではじめられます（Windows）。</p>
-    <div class="inst">
-      <div class="row"><div class="n">1</div><div><h4>ダウンロード</h4><p>DIMAGEの案内ページ（dimage.jp）から、Windows版インストーラをダウンロードします。※Mac版は近日対応。</p></div></div>
-      <div class="row"><div class="n">2</div><div><h4>インストール</h4><p>ダウンロードしたファイルをダブルクリックし、「次へ」で進めます。（保護のための警告が出た場合は「詳細情報」→「実行」）</p></div></div>
-      <div class="row"><div class="n">3</div><div><h4>ライセンス認証（初回のみ）</h4><p>アプリを起動し、ライセンスカードの<b>16桁コード</b>を入力します。以降はオフラインでご利用いただけます。</p></div></div>
-      <div class="row"><div class="n">4</div><div><h4>保存先を選ぶ（任意）</h4><p>画像とデータの保存先は、本体PCのほか<b>外付けHDD／SSD</b>も指定できます。フォルダごとコピーするだけでバックアップ・移行が可能です。</p></div></div>
+    <p class="kicker">PRICE</p>
+    <h2 class="sec">買い切り。月額はありません。</h2>
+    <p class="sec-lead">ライセンスカード1枚で、PC 1台分。追加費用なしでずっと使えます。</p>
+    <div class="price">
+      <div class="pcard main">
+        <span class="tag">参考販売価格</span>
+        <div class="lbl">DIMAGE ライセンス（PC 1台）</div>
+        <div class="amt"><span class="n tnum">64,000</span><span class="u">円（税抜）</span></div>
+        <div class="list">定価 80,000円（税抜）<span class="off">20% OFF</span></div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>買い切り・月額なし。ライセンスカード1枚で PC 1台</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>アプリのアップデート・サポート込み</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>写真の枚数・患者数に上限なし（PCの容量まで）</li>
+        </ul>
+        <div class="fn">※ 実際の販売価格は、お取引の歯科ディーラーにご確認ください（ディーラーにより異なります）。価格はすべて税抜です。</div>
+      </div>
+      <div class="pcard sub">
+        <h3>複数台でお使いの場合</h3>
+        <p>ライセンスは PC 1台につき1枚です。2台で使う場合はカード2枚をご購入ください。</p>
+        <p>なお、写真とデータを<b>外付けSSDに保存</b>して付け替える運用なら、1ライセンスで複数のPCから同じデータを扱えます（同時使用は不可）。</p>
+        <h3 style="margin-top:14px">お支払い</h3>
+        <p>お取引の歯科ディーラーからの請求となります。伝票・お支払い条件はディーラーにご確認ください。</p>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- 導入の流れ -->
+<section id="flow">
+  <div class="wrap">
+    <p class="kicker">HOW TO START</p>
+    <h2 class="sec">導入の流れ</h2>
+    <p class="sec-lead">お申し込みから、ご利用開始まで。ご購入はお取引の歯科ディーラー経由です。</p>
+    <div class="flow5">
+      <div class="row you"><div class="n">1</div><div><h4><span class="who">先生</span>下のフォームからお申し込み</h4><p>医院名・ご連絡先・お取引のディーラー名をご記入ください。この時点でご購入は確定しません。</p></div></div>
+      <div class="row us"><div class="n">2</div><div><h4><span class="who">自動返信</span>メールで「ダウンロードページ」のご案内が届きます</h4><p>ダウンロードはWindows PCで行いますので、<b>PCでメールを開ける環境</b>をご用意ください。メールが届いた時点では、まだご購入は完了していません。</p></div></div>
+      <div class="row us"><div class="n">3</div><div><h4><span class="who">ディーラー</span>ご記入のディーラーからご連絡・ライセンスカードのご購入</h4><p>当社からディーラーへ連絡し、ディーラー担当者が先生へご連絡します。お手続き後、16桁コードが入った<b>ライセンスカード</b>をお届けします。</p></div></div>
+      <div class="row you"><div class="n">4</div><div><h4><span class="who">先生</span>メールのリンクから、ダウンロード・インストール</h4><p>Windows PCで、最初のメールに記載のダウンロードページを開き、インストーラを実行します。管理者権限は不要です。</p></div></div>
+      <div class="row you"><div class="n">5</div><div><h4><span class="who">先生</span>ライセンスカードのコードを入力して、利用開始</h4><p>アプリを起動し、カードの<b>16桁コード</b>と医院名・電話番号を入力。初回のみインターネット接続が必要です。</p></div></div>
+    </div>
+    <div class="callout"><span>💡</span><div><b>スマートフォンでは動作しません。</b>DIMAGEはWindows PC用のアプリです。ダウンロードページはメールでお送りしますので、<b>PCのブラウザでメールのリンクを開いてください。</b></div></div>
+  </div>
+</section>
+
 <!-- ライセンス・購入・ディーラー -->
-<section id="license">
+<section id="license" class="alt">
   <div class="wrap">
     <p class="kicker">LICENSE &amp; ORDER</p>
     <h2 class="sec">ライセンスとご購入について</h2>
     <div class="lic">
       <div class="lcard">
         <h3>買い切り・1台につき1ライセンス</h3>
-        <p>ライセンスは買い切り。カード裏の16桁コードで初回認証すれば、以降はオフラインで使えます。</p>
-        <p>複数のPCでお使いの場合は、台数分のライセンスをご購入ください。外付けSSDにデータを入れて付け替えれば、1ライセンスで複数PCから同じデータを扱う運用も可能です（同時使用は不可）。</p>
+        <p>ライセンスカードの16桁コードで初回認証すると、そのPCで使えるようになります。認証は初回のみインターネット接続が必要です。</p>
+        <p>以降も起動時にライセンスの確認を行いますが、一時的にインターネットに繋がらない場合でも、猶予期間内はそのまま起動できます。</p>
       </div>
       <div class="lcard">
-        <h3>データは院内に。クラウド不使用</h3>
-        <p>写真とデータは医院のPC内（または外付けHDD／SSD）に保存されます。当社が取得することはありません。</p>
-        <p>PCの買い替え・故障交換の際は、機器とライセンスの紐づけ解除が必要です。お申し込みフォーム／お問い合わせよりご依頼ください。</p>
+        <h3>写真は院内に。クラウドには置きません</h3>
+        <p>写真とデータは医院のPC内（または外付けHDD／SSD）に保存されます。写真が当社のサーバーへ送られることはありません。</p>
+        <p>PCの買い替え・故障交換の際は、サポート窓口で旧PCとの紐づけを解除し、新しいPCで再認証できます。</p>
       </div>
     </div>
     <div class="dealer">
       <h3>ご購入は「お取引の歯科ディーラー」経由です</h3>
       <p>DIMAGEは、<b>歯科ディーラーを通じてのご提供</b>です（メーカー直販は行っておりません）。下のフォームに、ふだんお取引のあるディーラー名・ご担当者・ご連絡先をご記入ください。内容を確認し、<b>そのディーラー経由でお手続きを進めます。</b></p>
-      <p>まだお取引のないディーラーの場合は、当方からディーラーへご連絡し、お取引の可否をご確認のうえご案内いたします。</p>
-      <div class="names">主なお取扱いディーラー：ササキ／尾崎／トミヤ ほか（順次拡大中）</div>
+      <p>まだお取引のないディーラーの場合は、当社からディーラーへご連絡し、お取引の可否をご確認のうえご案内いたします。</p>
+      <div class="names">主なお取扱いディーラー：ササキ株式会社／株式会社トミヤ／尾崎歯材株式会社 ほか（順次拡大中）</div>
     </div>
   </div>
 </section>
 
 <!-- Q&A -->
-<section id="qa" class="alt">
+<section id="qa">
   <div class="wrap">
     <p class="kicker">Q &amp; A</p>
     <h2 class="sec">よくあるご質問</h2>
     <div class="qa">
-      <details><summary><span class="q">Q</span>1つのライセンスで複数のPCに入れられますか？<span class="mk">＋</span></summary><div class="a">1ライセンス＝1台です。複数台でお使いの場合は台数分ご購入ください。なお、外付けSSDにデータを入れて付け替えれば、1ライセンスで複数のPCから同じデータを扱う運用も可能です（同時使用は不可）。</div></details>
-      <details><summary><span class="q">Q</span>PCを買い替え・故障交換したときは？<span class="mk">＋</span></summary><div class="a">旧機器との紐づけ解除が必要です。お申し込みフォーム／お問い合わせから「ライセンス紐づけ解除」をご依頼ください。確認のうえ、新しいPCで再認証できるようにします。</div></details>
-      <details><summary><span class="q">Q</span>NASや共有サーバーに保存できますか？<span class="mk">＋</span></summary><div class="a">NAS等のネットワークストレージには対応していません。本体PC内、または外付けHDD／SSDへの保存をご利用ください。</div></details>
-      <details><summary><span class="q">Q</span>対応している画像形式・環境は？<span class="mk">＋</span></summary><div class="a">JPEG／PNG／HEICに対応。撮影日時（Exif）があれば自動で日付整理します。対応OSはWindows 10／11（64bit）です（Mac版は近日対応）。</div></details>
-      <details><summary><span class="q">Q</span>インターネットは常に必要ですか？<span class="mk">＋</span></summary><div class="a">いいえ。初回のライセンス認証とアップデート時以外は、オフラインで動作します。データは院内に保存され、当社が取得することはありません。</div></details>
       <details><summary><span class="q">Q</span>購入はどこからですか？直接買えますか？<span class="mk">＋</span></summary><div class="a">DIMAGEは歯科ディーラー経由でのご提供です。直販は行っておりません。お申し込みフォームに、お取引のあるディーラー名・ご担当者・ご連絡先をご記入ください。そのディーラー経由でお手続きを進めます。</div></details>
+      <details><summary><span class="q">Q</span>申し込んだら、すぐ使えますか？<span class="mk">＋</span></summary><div class="a">お申し込み直後に、ダウンロードページのご案内メールが自動で届きます。ただし、ご利用にはディーラーから購入いただく<b>ライセンスカードの16桁コード</b>が必要です。カードが届いたら、メールのリンクからダウンロード・認証してご利用ください。</div></details>
+      <details><summary><span class="q">Q</span>1つのライセンスで複数のPCに入れられますか？<span class="mk">＋</span></summary><div class="a">1ライセンス＝1台です。複数台でお使いの場合は台数分ご購入ください。なお、外付けSSDにデータを入れて付け替えれば、1ライセンスで複数のPCから同じデータを扱う運用も可能です（同時使用は不可）。</div></details>
+      <details><summary><span class="q">Q</span>PCを買い替え・故障交換したときは？<span class="mk">＋</span></summary><div class="a">旧PCとの紐づけ解除が必要です。サポート窓口へ「ライセンス紐づけ解除」をご依頼ください。確認のうえ、新しいPCで再認証できるようにします。写真データはフォルダごとコピーして移行できます。</div></details>
+      <details><summary><span class="q">Q</span>インターネットは常に必要ですか？<span class="mk">＋</span></summary><div class="a">初回のライセンス認証にはインターネット接続が必要です。以降も起動時にライセンスの確認を行いますが、一時的に接続できない場合でも猶予期間内は起動できます。写真データは院内のPCに保存され、外部へ送信されません。</div></details>
+      <details><summary><span class="q">Q</span>NASや共有サーバーに保存できますか？<span class="mk">＋</span></summary><div class="a">NAS等のネットワークストレージには対応していません。本体PC内、または外付けHDD／SSDへの保存をご利用ください。</div></details>
+      <details><summary><span class="q">Q</span>対応している画像形式・環境は？<span class="mk">＋</span></summary><div class="a">JPEG／PNGに対応。撮影日時（Exif）があれば自動で日付整理します。対応OSはWindows 10／11（64bit）です（Mac版は今後対応予定）。</div></details>
+      <details><summary><span class="q">Q</span>ライセンスカードを紛失したら？<span class="mk">＋</span></summary><div class="a">認証済みのPCではそのままお使いいただけます。未使用のカードを紛失・盗難された場合は、すみやかにサポート窓口へご連絡ください（コードを無効化します）。削った後のコードの再発行はできません。</div></details>
     </div>
   </div>
 </section>
 
 <!-- 動作環境 -->
-<section>
+<section class="alt">
   <div class="wrap">
     <p class="kicker">REQUIREMENTS</p>
     <h2 class="sec">動作環境</h2>
     <div class="env">
-      <div class="e"><div class="k">OS</div><div class="v">Windows 10／11（64bit）※Mac版は近日対応</div></div>
+      <div class="e"><div class="k">OS</div><div class="v">Windows 10／11（64bit）※Mac版は今後対応予定</div></div>
+      <div class="e"><div class="k">画像形式</div><div class="v">JPEG／PNG（Exif撮影日時を自動取得）</div></div>
       <div class="e"><div class="k">保存先</div><div class="v">本体PC／外付けHDD・SSD（NAS非対応）</div></div>
-      <div class="e"><div class="k">ネット接続</div><div class="v">初回認証・アップデート時のみ</div></div>
+      <div class="e"><div class="k">ネット接続</div><div class="v">初回認証時に必須。以降は起動時に確認（猶予あり）</div></div>
     </div>
   </div>
 </section>
@@ -417,30 +511,38 @@
     <div class="formcard">
       <div class="note-dealer">
         <b>ご購入は歯科ディーラー経由です（直販はしておりません）。</b><br>
-        ふだんお取引のあるディーラー名・ご担当者・ご連絡先をご記入ください。お取引のあるディーラーならそのままお手続きへ、まだお取引のないディーラーの場合は当方よりご連絡し、お取引の可否をご確認のうえご案内します。<br>
-        <span style="color:var(--mut)">主なお取扱いディーラー：ササキ／尾崎／トミヤ ほか（順次拡大中）</span>
+        ふだんお取引のあるディーラー名・ご担当者・ご連絡先をご記入ください。送信後、ダウンロードページのご案内メールが自動で届きます（この時点ではご購入は完了していません）。当社よりディーラーへ連絡し、ディーラーからご連絡いたします。<br>
+        <span style="color:var(--mut)">主なお取扱いディーラー：ササキ株式会社／株式会社トミヤ／尾崎歯材株式会社 ほか（順次拡大中）</span>
       </div>
-      <form id="applyForm" novalidate>
+      <!--
+        ▼ 送信先の接続（実装者向けメモ）
+        data-endpoint に POST 先URL（GAS / Formspree / 自社API など）を入れると、JSONでPOSTします。
+        空のままだとデモ動作（画面上で完了表示のみ）。
+        サーバー側で ①申込者へ自動返信（ダウンロードページURL＋「まだ購入は完了していません」注意書き） ②スプレッドシート等のリストへ追記 ③管理者へ通知 を行ってください。
+      -->
+      <form id="applyForm" novalidate data-endpoint="">
         <div class="fgrid">
-          <div class="fld"><label>医院名<span class="req">必須</span></label><input name="clinic" required placeholder="例）やまだ歯科医院"></div>
-          <div class="fld"><label>ご担当者名<span class="req">必須</span></label><input name="person" required placeholder="例）山田 太郎"></div>
-          <div class="fld"><label>医院のお電話<span class="req">必須</span></label><input name="tel" required inputmode="tel" placeholder="例）03-1234-5678"></div>
-          <div class="fld"><label>医院のメール<span class="req">必須</span></label><input name="email" required type="email" placeholder="例）info@example.com"></div>
-          <div class="fld full"><label>お取引のディーラー名<span class="req">必須</span></label><input name="dealer" required placeholder="例）ササキ／尾崎／トミヤ など"><span class="hint">ふだんお付き合いのある歯科ディーラー名をご記入ください。</span></div>
+          <div class="fld"><label>医院名<span class="req">必須</span></label><input name="clinic" required autocomplete="organization" placeholder="例）やまだ歯科医院"></div>
+          <div class="fld"><label>ご担当者名<span class="req">必須</span></label><input name="person" required autocomplete="name" placeholder="例）山田 太郎"></div>
+          <div class="fld"><label>医院のお電話<span class="req">必須</span></label><input name="tel" required inputmode="tel" autocomplete="tel" placeholder="例）03-1234-5678"></div>
+          <div class="fld"><label>メールアドレス<span class="req">必須</span></label><input name="email" required type="email" autocomplete="email" placeholder="例）info@example.com"><span class="hint">ダウンロードページのご案内をお送りします。PCで受信できるアドレスをおすすめします。</span></div>
+          <div class="fld full"><label>お取引のディーラー名<span class="req">必須</span></label><input name="dealer" required placeholder="例）ササキ株式会社／株式会社トミヤ／尾崎歯材株式会社 など"><span class="hint">ふだんお付き合いのある歯科ディーラー名をご記入ください。支店・営業所名も分かれば併記ください。</span></div>
           <div class="fld"><label>ディーラーのご担当者名<span class="opt">任意</span></label><input name="dealerPerson" placeholder="分かれば"></div>
           <div class="fld"><label>ディーラーのご連絡先<span class="opt">任意</span></label><input name="dealerContact" placeholder="電話／メールなど"></div>
           <div class="fld"><label>ご希望台数<span class="opt">任意</span></label><input name="qty" inputmode="numeric" placeholder="例）1"></div>
           <div class="fld"><label>ご質問・ご要望<span class="opt">任意</span></label><input name="note" placeholder="ご自由にどうぞ"></div>
+          <div class="hp" aria-hidden="true"><label>会社URL<input name="website" tabindex="-1" autocomplete="off"></label></div>
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary btn-lg" style="min-width:260px;justify-content:center">この内容で送信する</button>
-          <div class="form-note">送信いただいた内容をもとに、ディーラー経由でご連絡します。個人情報は本件のご案内以外には使用しません。</div>
+          <div class="form-note">送信いただいた内容をもとに、ディーラー経由でご連絡します。ご記入の個人情報は、本件のご案内およびライセンスのサポート以外には使用しません。</div>
         </div>
       </form>
       <div class="thanks" id="thanks">
         <div class="ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>送信ありがとうございます</h3>
-        <p>内容を確認し、ご記入のディーラー経由でご連絡いたします。<br>お取引のないディーラーの場合は、当方よりディーラーへご連絡のうえご案内します。</p>
+        <p>ご記入のメールアドレスへ、ダウンロードページのご案内を自動送信しました。<br>当社よりディーラーへ連絡し、ディーラーからご連絡いたします。</p>
+        <div class="warn"><b>まだご購入は完了していません。</b><br>ダウンロードページは、ディーラーから<b>ライセンスカードをご購入いただいた後</b>に、Windows PCで開いてください。</div>
       </div>
     </div>
   </div>
@@ -448,25 +550,47 @@
 
 <footer>
   <div class="wrap">
-    <div class="logo"><span class="mk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 7h11l3 3v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="#fff" stroke-width="1.7"/><circle cx="11.5" cy="13" r="2.6" stroke="#fff" stroke-width="1.7"/></svg></span><span class="nm">DIMAGE</span></div>
+    <div class="logo"><img src="dimage-img/logo.png" alt=""><span class="nm">DIMAGE</span></div>
     <span class="sp"></span>
-    <span>販売：ササキ株式会社 ／ 開発：株式会社Passione</span>
+    <span>製造販売：株式会社Passione ／ 開発：株式会社G TECH JAPAN ／ 販売：全国の歯科ディーラー</span>
   </div>
-  <div class="wrap"><div class="fineprint">© 2026 Passione. DIMAGE は口腔内写真（静止画）の保存・管理を支援するアプリです。点数・算定要件は令和8年度改定時点の内容で、実際の算定可否は各医院の診療内容・審査機関の判断・最新の告示によります。</div></div>
+  <div class="wrap"><div class="fineprint">© 2026 Passione Inc. DIMAGE は口腔内写真（静止画）の保存・管理を支援するアプリです。点数・算定要件は令和8年度改定時点の内容で、実際の算定可否は各医院の診療内容・審査機関の判断・最新の告示によります。記載の価格はすべて税抜で、実際の販売価格は各ディーラーにより異なります。</div></div>
 </footer>
 
 <script>
-  document.getElementById('applyForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var f=e.target, ok=true;
-    ['clinic','person','tel','email','dealer'].forEach(function(n){
-      var el=f.elements[n];
-      if(!el.value.trim()){ ok=false; el.style.borderColor='#E5484D'; } else { el.style.borderColor=''; }
+  (function(){
+    var form=document.getElementById('applyForm');
+    var thanks=document.getElementById('thanks');
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var ok=true;
+      ['clinic','person','tel','email','dealer'].forEach(function(n){
+        var el=form.elements[n];
+        if(!el.value.trim()){ ok=false; el.style.borderColor='#E5484D'; } else { el.style.borderColor=''; }
+      });
+      var em=form.elements.email;
+      if(em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)){ ok=false; em.style.borderColor='#E5484D'; }
+      if(!ok){ alert('必須項目をご確認ください。'); return; }
+      if(form.elements.website.value){ return; } // honeypot
+
+      var data={};
+      Array.prototype.forEach.call(form.elements,function(el){ if(el.name && el.name!=='website') data[el.name]=el.value.trim(); });
+      data.page=location.href; data.sentAt=new Date().toISOString();
+
+      var done=function(){
+        form.style.display='none';
+        thanks.classList.add('show');
+        thanks.scrollIntoView({block:'center',behavior:'smooth'});
+      };
+      var endpoint=form.getAttribute('data-endpoint');
+      if(!endpoint){ done(); return; } // デモ動作（送信先未接続）
+
+      var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='送信中…';
+      fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(data)})
+        .then(done)
+        .catch(function(){ alert('送信に失敗しました。時間をおいて再度お試しください。'); btn.disabled=false; btn.textContent='この内容で送信する'; });
     });
-    if(!ok){ alert('必須項目（*）をご入力ください。'); return; }
-    f.style.display='none';
-    document.getElementById('thanks').classList.add('show');
-    document.getElementById('thanks').scrollIntoView({block:'center',behavior:'smooth'});
-    // ※本番公開時に送信先（メール／Formspree／GAS等）へ接続します。
-  });
+  })();
 </script>
+</body>
+</html>
