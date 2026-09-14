@@ -9,7 +9,7 @@
 <link rel="icon" href="dimage-img/logo.png">
 <style>
   :root{
-    --brand:#5A9DFF;--brand-dark:#3B7EE6;--brand-soft:#EAF2FF;--brand-tint:#F5F8FF;
+    --brand:#5A9DFF;--brand-dark:#3B7EE6;--brand-deep:#2A63C4;--brand-soft:#EAF2FF;--brand-tint:#F5F8FF;
     --ground:#F4F7FB;--surface:#FFFFFF;--ink:#16222E;--ink-2:#3A4A57;--mut:#6B7986;--line:#E1E8F0;--ok:#1E9E6A;--ok-soft:#E6F5EE;
     --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Meiryo",system-ui,sans-serif;
   }
@@ -35,7 +35,7 @@
   .warn{background:#FFF8EC;border:1px solid #F3DDB5;border-radius:14px;padding:16px 18px;color:#6B4A12;font-size:14px;line-height:1.8;display:flex;gap:12px;margin-bottom:22px}
   .warn b{color:#8A5A00}
   .warn .ic{font-size:22px;line-height:1.2}
-  .dl{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:linear-gradient(135deg,var(--brand),#7DB4FF);border-radius:16px;padding:22px 24px;color:#fff}
+  .dl{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:linear-gradient(135deg,var(--brand-deep),#4E92F0);border-radius:16px;padding:22px 24px;color:#fff}
   .dl .t{flex:1;min-width:220px}
   .dl .t b{display:block;font-size:18px}
   .dl .t span{font-size:13px;color:#EDF4FF}
@@ -99,14 +99,15 @@
     </div>
 
     <div class="card">
-      <h2><span class="n">2</span>ライセンス認証（初回のみ）</h2>
+      <h2><span class="n">2</span>ライセンス認証</h2>
       <p>DIMAGEを起動すると、ライセンス認証画面が表示されます。ライセンスカード裏面の銀色部分を削り、<b>16桁のコード</b>を確認してください。</p>
       <div class="steps">
         <div class="st"><span class="n">a</span><div>ライセンスコードを <span class="code">XXXX-XXXX-XXXX-XXXX</span> の形式で入力</div></div>
         <div class="st"><span class="n">b</span><div><b>医院名・電話番号</b>を入力（住所は任意）。サポート時のご本人確認に使用します。</div></div>
-        <div class="st"><span class="n">c</span><div>「認証して始める」をクリック。<b>初回のみインターネット接続が必要</b>です。</div></div>
+        <div class="st"><span class="n">c</span><div>「認証して始める」をクリックします。<b>認証にはインターネット接続が必要</b>です。</div></div>
       </div>
       <div class="shot"><img src="dimage-img/fix-license.jpg" alt="ライセンス認証画面" loading="lazy"></div>
+      <p style="margin-top:14px;font-size:13.5px;color:var(--ink-2)">認証後も、起動時にライセンスの確認を行います。ネットワークが一時的に繋がらない場合でも<b>猶予期間内（数日程度）はそのまま起動できます</b>ので、日常の診療でお困りになることはありません。</p>
     </div>
 
     <div class="card">
@@ -119,7 +120,7 @@
       <h2>困ったときは</h2>
       <details><summary>「コードが無効です」と表示される</summary><div class="a">数字の0とアルファベットのO、1とIなど、見間違えやすい文字をご確認ください。コードは大文字・小文字を区別しません。それでも認証できない場合は、カードの管理番号（No.）を添えてサポートへご連絡ください。</div></details>
       <details><summary>別のPCで既に使われていると表示される</summary><div class="a">1つのコードはPC 1台でのみ有効です。PCを買い替えた場合は、サポート窓口で旧PCとの紐づけ解除を行いますのでご連絡ください。</div></details>
-      <details><summary>インターネットに繋がらない環境で使いたい</summary><div class="a">初回認証時のみインターネット接続が必要です。以降は起動時にライセンス確認を行いますが、一時的に接続できない場合でも猶予期間内は起動できます。長期間オフラインの運用は想定していません。</div></details>
+      <details><summary>インターネットに繋がらない環境で使いたい</summary><div class="a">初回の認証にはインターネット接続が必要です。以降も起動時にライセンスの確認を行いますが、一時的に接続できない場合でも猶予期間内（数日程度）は起動できます。常時オフラインでの運用は想定していません。</div></details>
       <details><summary>サポート窓口</summary><div class="a">お問い合わせは <b>dimage.jp/support</b>（メールフォーム）まで。医院名・ライセンスカードの管理番号（No.）をお知らせいただくとスムーズです。</div></details>
     </div>
   </div>
