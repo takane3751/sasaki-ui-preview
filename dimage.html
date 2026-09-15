@@ -522,7 +522,7 @@
       <div class="lcard">
         <h3>写真は院内に。クラウドには置きません</h3>
         <p>写真とデータは医院のPC内（または外付けHDD／SSD）に保存されます。写真が当社のサーバーへ送られることはありません。</p>
-        <p>PCの買い替え・故障交換の際は、サポート窓口で旧PCとの紐づけを解除し、新しいPCで再認証できます。</p>
+        <p>PCの買い替え・故障交換の際は、サポート窓口（<a href="mailto:support@dimage.jp">support@dimage.jp</a>）で旧PCとの紐づけを解除し、新しいPCで再認証できます。</p>
       </div>
     </div>
     <div class="dealer">
@@ -542,11 +542,11 @@
       <details><summary><span class="q">Q</span>購入はどこからですか？直接買えますか？<span class="mk">＋</span></summary><div class="a">DIMAGEは、お取引の歯科ディーラーを通じてご提供しています。お申し込みフォームに、お取引のあるディーラー名・ご担当者・ご連絡先をご記入ください。内容を確認のうえ、そのディーラー経由でお手続きを進めます。ディーラーでのお取扱いが難しい場合は、恐れ入りますが当社より直接ご案内させていただきます。</div></details>
       <details><summary><span class="q">Q</span>申し込んだら、すぐ使えますか？<span class="mk">＋</span></summary><div class="a">お申し込み直後に、ダウンロードページのご案内メールが自動で届きます。ただし、ご利用にはディーラーから購入いただく<b>ライセンスカードの16桁コード</b>が必要です。カードが届いたら、メールのリンクからダウンロード・認証してご利用ください。</div></details>
       <details><summary><span class="q">Q</span>1つのライセンスで複数のPCに入れられますか？<span class="mk">＋</span></summary><div class="a">1ライセンス＝1台です。複数台でお使いの場合は台数分ご購入ください。なお、外付けSSDにデータを入れて付け替えれば、1ライセンスで複数のPCから同じデータを扱う運用も可能です（同時使用は不可）。</div></details>
-      <details><summary><span class="q">Q</span>PCを買い替え・故障交換したときは？<span class="mk">＋</span></summary><div class="a">旧PCとの紐づけ解除が必要です。サポート窓口へ「ライセンス紐づけ解除」をご依頼ください。確認のうえ、新しいPCで再認証できるようにします。写真データはフォルダごとコピーして移行できます。</div></details>
+      <details><summary><span class="q">Q</span>PCを買い替え・故障交換したときは？<span class="mk">＋</span></summary><div class="a">旧PCとの紐づけ解除が必要です。サポート窓口（support@dimage.jp）へ「ライセンス紐づけ解除」をご依頼ください。確認のうえ、新しいPCで再認証できるようにします。写真データはフォルダごとコピーして移行できます。</div></details>
       <details><summary><span class="q">Q</span>インターネットは常に必要ですか？<span class="mk">＋</span></summary><div class="a">初回のライセンス認証にはインターネット接続が必要です。以降も起動時にライセンスの確認を行いますが、一時的に接続できない場合でも猶予期間内は起動できます。写真データは院内のPCに保存され、外部へ送信されません。</div></details>
       <details><summary><span class="q">Q</span>NASや共有サーバーに保存できますか？<span class="mk">＋</span></summary><div class="a">NAS等のネットワークストレージには対応していません。本体PC内、または外付けHDD／SSDへの保存をご利用ください。</div></details>
       <details><summary><span class="q">Q</span>対応している画像形式・環境は？<span class="mk">＋</span></summary><div class="a">JPEG／PNGに対応。撮影日時（Exif）があれば自動で日付整理します。対応OSはWindows 10／11（64bit）です（Mac版は今後対応予定）。</div></details>
-      <details><summary><span class="q">Q</span>ライセンスカードを紛失したら？<span class="mk">＋</span></summary><div class="a">認証済みのPCではそのままお使いいただけます。未使用のカードを紛失・盗難された場合は、すみやかにサポート窓口へご連絡ください（コードを無効化します）。削った後のコードの再発行はできません。</div></details>
+      <details><summary><span class="q">Q</span>ライセンスカードを紛失したら？<span class="mk">＋</span></summary><div class="a">認証済みのPCではそのままお使いいただけます。未使用のカードを紛失・盗難された場合は、すみやかにサポート窓口（support@dimage.jp）へご連絡ください（コードを無効化します）。削った後のコードの再発行はできません。</div></details>
     </div>
   </div>
 </section>
@@ -578,10 +578,10 @@
         ふだんお取引のあるディーラー名・ご担当者・ご連絡先をご記入ください。送信後、ダウンロードページのご案内メールが自動で届きます（この時点ではご購入は完了していません）。当社よりディーラーへ連絡し、ディーラーからご連絡いたします。まだお取引のないディーラーでお取扱いが難しい場合は、恐れ入りますが当社より直接ご案内させていただきます。<br>
       </div>
       <!--
-        ▼ 送信先の接続（実装者向けメモ）
-        data-endpoint に POST 先URL（GAS / Formspree / 自社API など）を入れると、JSONでPOSTします。
-        空のままだとデモ動作（画面上で完了表示のみ）。
-        サーバー側で ①申込者へ自動返信（ダウンロードページURL＋「まだ購入は完了していません」注意書き） ②スプレッドシート等のリストへ追記 ③管理者へ通知 を行ってください。
+        ▼ 送信先（実装メモ）
+        本番（dimage.jp）は data-endpoint="/form/send.php"。送信先は info@dimage.jp、
+        申込者への自動返信は support@dimage.jp から送られ、CSVにも追記されます。
+        data-endpoint が空のときはデモ動作（画面上で完了表示のみ・送信されません）。
       -->
       <form id="applyForm" novalidate data-endpoint="">
         <div class="fgrid">
@@ -615,7 +615,7 @@
   <div class="wrap">
     <div class="logo"><img src="dimage-img/logo.png" alt=""><span class="nm">DIMAGE</span></div>
     <span class="sp"></span>
-    <span>提供：株式会社Passione ／ 販売：全国の歯科ディーラー</span>
+    <span>提供：株式会社Passione ／ 販売：全国の歯科ディーラー ／ お問い合わせ：<a href="mailto:support@dimage.jp">support@dimage.jp</a></span>
   </div>
   <div class="wrap"><div class="fineprint">© 2026 Passione Inc. DIMAGE は口腔内写真（静止画）の保存・管理を支援するアプリです。点数・算定要件は令和8年度改定時点の内容で、実際の算定可否は各医院の診療内容・審査機関の判断・最新の告示によります。記載の価格はすべて税抜で、実際の販売価格は各ディーラーにより異なります。</div></div>
 </footer>
@@ -646,12 +646,18 @@
         thanks.scrollIntoView({block:'center',behavior:'smooth'});
       };
       var endpoint=form.getAttribute('data-endpoint');
-      if(!endpoint){ done(); return; } // デモ動作（送信先未接続）
+      if(!endpoint){ done(); return; } // 送信先未接続のときはデモ動作
 
-      var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='送信中…';
-      fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(data)})
-        .then(done)
-        .catch(function(){ alert('送信に失敗しました。時間をおいて再度お試しください。'); btn.disabled=false; btn.textContent='この内容で送信する'; });
+      var btn=form.querySelector('button[type=submit]');
+      var reset=function(){ btn.disabled=false; btn.textContent='この内容で送信する'; };
+      btn.disabled=true; btn.textContent='送信中…';
+      fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+        .then(function(res){ return res.json().catch(function(){ return {ok:res.ok}; }); })
+        .then(function(r){
+          if(r && r.ok){ done(); }
+          else { alert((r && r.message) || '送信に失敗しました。時間をおいて再度お試しください。'); reset(); }
+        })
+        .catch(function(){ alert('送信に失敗しました。通信環境をご確認のうえ、時間をおいて再度お試しください。'); reset(); });
     });
   })();
 </script>
