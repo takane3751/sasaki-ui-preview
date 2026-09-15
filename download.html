@@ -78,21 +78,21 @@
       お申し込みの時点ではご購入は完了していません。ディーラーからの連絡をお待ちいただき、カードがお手元に届いてから以下の手順を進めてください。（インストールだけ先に済ませておくことはできます）
     </div></div>
 
-    <!-- ▼ 実装者向け：href をインストーラの本番URL（サブドメイン配信）に差し替え。data-version / サイズも合わせて更新 -->
+    <!-- インストーラ配信元：update.dimage-sys.jp（Cloudflare／システム側ドメイン）。差し替え時は href と data-href の両方を更新すること -->
     <div class="dl">
       <div class="t"><b>Windows版 インストーラ</b><span>Windows 10／11（64bit）対応・管理者権限不要</span></div>
-      <a class="btn" id="dlBtn" href="#" data-href="" onclick="return startDownload(this)">
+      <a class="btn" id="dlBtn" href="https://update.dimage-sys.jp/DIMAGE-setup.exe" data-href="https://update.dimage-sys.jp/DIMAGE-setup.exe" onclick="return startDownload(this)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         ダウンロード（Windows）
       </a>
-      <div class="meta"><span>バージョン：v1.0.0</span><span>ファイル形式：.exe（インストーラ）</span><span>Mac版：今後対応予定</span></div>
+      <div class="meta"><span>バージョン：v1.0.0</span><span>ファイル形式：.exe（インストーラ）</span><span>サイズ：約6MB</span><span>Mac版：今後対応予定</span></div>
     </div>
     <p style="font-size:12.5px;color:var(--mut);margin:10px 0 26px">※ スマートフォンやタブレットではインストールできません。PCのブラウザでこのページを開いてください。</p>
 
     <div class="card">
       <h2><span class="n">1</span>インストール</h2>
       <div class="steps">
-        <div class="st"><span class="n">a</span><div>ダウンロードしたファイル（<b>DIMAGE-Setup-x.x.x.exe</b>）をダブルクリックします。</div></div>
+        <div class="st"><span class="n">a</span><div>ダウンロードしたファイル（<b>DIMAGE-setup.exe</b>）をダブルクリックします。</div></div>
         <div class="st"><span class="n">b</span><div>「WindowsによってPCが保護されました」と表示された場合は、<b>「詳細情報」→「実行」</b>をクリックしてください。</div></div>
         <div class="st"><span class="n">c</span><div>画面の案内に従って「次へ」で進めると、デスクトップにDIMAGEのアイコンが作成されます。管理者権限は不要です。</div></div>
       </div>
